@@ -1,5 +1,7 @@
 ﻿
-select * from Residents;
+select * from Workers;
+select * from Users;
+
 drop table Residents
 drop table Rooms
 select * from Rooms

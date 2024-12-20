@@ -52,29 +52,47 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllUserControls\UC_mange workers.cs">
+    <Compile Include="AllUserControls Manger\UC_mange workers.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AllUserControls\UC_mange workers.Designer.cs">
+    <Compile Include="AllUserControls Manger\UC_mange workers.Designer.cs">
       <DependentUpon>UC_mange workers.cs</DependentUpon>
     </Compile>
-    <Compile Include="AllUserControls\UC_MonitoringRoom.cs">
+    <Compile Include="AllUserControls Manger\UC_MonitoringRoom.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AllUserControls\UC_MonitoringRoom.Designer.cs">
+    <Compile Include="AllUserControls Manger\UC_MonitoringRoom.Designer.cs">
       <DependentUpon>UC_MonitoringRoom.cs</DependentUpon>
     </Compile>
-    <Compile Include="AllUserControls\UC_ResidentInfo.cs">
+    <Compile Include="AllUserControls Manger\UC_ResidentInfo.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AllUserControls\UC_ResidentInfo.Designer.cs">
+    <Compile Include="AllUserControls Manger\UC_ResidentInfo.Designer.cs">
       <DependentUpon>UC_ResidentInfo.cs</DependentUpon>
     </Compile>
-    <Compile Include="AllUserControls\UC_TrackIncome.cs">
+    <Compile Include="AllUserControls Manger\UC_TrackIncome.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="AllUserControls\UC_TrackIncome.Designer.cs">
+    <Compile Include="AllUserControls Manger\UC_TrackIncome.Designer.cs">
       <DependentUpon>UC_TrackIncome.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_ManageResidents.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_ManageResidents.Designer.cs">
+      <DependentUpon>UC_ManageResidents.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_ResCHECKOUT.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_ResCHECKOUT.Designer.cs">
+      <DependentUpon>UC_ResCHECKOUT.cs</DependentUpon>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_RoomAssign.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AllUserControls Resptions\UC_RoomAssign.Designer.cs">
+      <DependentUpon>UC_RoomAssign.cs</DependentUpon>
     </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
@@ -109,17 +127,26 @@
     <Compile Include="Signup.Designer.cs">
       <DependentUpon>Signup.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="AllUserControls\UC_mange workers.resx">
+    <EmbeddedResource Include="AllUserControls Manger\UC_mange workers.resx">
       <DependentUpon>UC_mange workers.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AllUserControls\UC_MonitoringRoom.resx">
+    <EmbeddedResource Include="AllUserControls Manger\UC_MonitoringRoom.resx">
       <DependentUpon>UC_MonitoringRoom.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AllUserControls\UC_ResidentInfo.resx">
+    <EmbeddedResource Include="AllUserControls Manger\UC_ResidentInfo.resx">
       <DependentUpon>UC_ResidentInfo.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="AllUserControls\UC_TrackIncome.resx">
+    <EmbeddedResource Include="AllUserControls Manger\UC_TrackIncome.resx">
       <DependentUpon>UC_TrackIncome.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllUserControls Resptions\UC_ManageResidents.resx">
+      <DependentUpon>UC_ManageResidents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllUserControls Resptions\UC_ResCHECKOUT.resx">
+      <DependentUpon>UC_ResCHECKOUT.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AllUserControls Resptions\UC_RoomAssign.resx">
+      <DependentUpon>UC_RoomAssign.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>

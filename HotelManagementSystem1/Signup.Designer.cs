@@ -30,6 +30,13 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signup));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label9 = new System.Windows.Forms.Label();
+            this.Signup_ApprovalId = new Guna.UI2.WinForms.Guna2TextBox();
+            this.signup_role = new Guna.UI2.WinForms.Guna2TextBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.SignUP_showpass = new Guna.UI2.WinForms.Guna2CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.SignUP_Pass = new Guna.UI2.WinForms.Guna2TextBox();
             this.label8 = new System.Windows.Forms.Label();
             this.SignUP_loginhere = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -42,13 +49,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.SignUP_Pass = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.SignUP_showpass = new Guna.UI2.WinForms.Guna2CheckBox();
-            this.label7 = new System.Windows.Forms.Label();
-            this.signup_role = new Guna.UI2.WinForms.Guna2TextBox();
-            this.Signup_ApprovalId = new Guna.UI2.WinForms.Guna2TextBox();
-            this.label9 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2PictureBox1)).BeginInit();
@@ -79,6 +79,136 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1545, 1019);
             this.panel1.TabIndex = 1;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(742, 527);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(154, 33);
+            this.label9.TabIndex = 28;
+            this.label9.Text = "ApprovalId";
+            // 
+            // Signup_ApprovalId
+            // 
+            this.Signup_ApprovalId.BorderRadius = 30;
+            this.Signup_ApprovalId.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.Signup_ApprovalId.DefaultText = "";
+            this.Signup_ApprovalId.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.Signup_ApprovalId.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.Signup_ApprovalId.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.Signup_ApprovalId.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.Signup_ApprovalId.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.Signup_ApprovalId.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.Signup_ApprovalId.Font = new System.Drawing.Font("Segoe UI", 13.875F);
+            this.Signup_ApprovalId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.Signup_ApprovalId.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.Signup_ApprovalId.IconLeft = ((System.Drawing.Image)(resources.GetObject("Signup_ApprovalId.IconLeft")));
+            this.Signup_ApprovalId.IconLeftSize = new System.Drawing.Size(30, 30);
+            this.Signup_ApprovalId.Location = new System.Drawing.Point(748, 569);
+            this.Signup_ApprovalId.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.Signup_ApprovalId.Name = "Signup_ApprovalId";
+            this.Signup_ApprovalId.PasswordChar = '\0';
+            this.Signup_ApprovalId.PlaceholderText = "ApprovalId ";
+            this.Signup_ApprovalId.SelectedText = "";
+            this.Signup_ApprovalId.Size = new System.Drawing.Size(642, 84);
+            this.Signup_ApprovalId.TabIndex = 27;
+            this.Signup_ApprovalId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.Signup_ApprovalId.TextChanged += new System.EventHandler(this.Signup_ApprovalId_TextChanged);
+            // 
+            // signup_role
+            // 
+            this.signup_role.BorderRadius = 30;
+            this.signup_role.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.signup_role.DefaultText = "";
+            this.signup_role.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.signup_role.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.signup_role.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.signup_role.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.signup_role.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.signup_role.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.signup_role.Font = new System.Drawing.Font("Segoe UI", 13.875F);
+            this.signup_role.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.signup_role.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.signup_role.IconLeft = ((System.Drawing.Image)(resources.GetObject("signup_role.IconLeft")));
+            this.signup_role.IconLeftSize = new System.Drawing.Size(30, 30);
+            this.signup_role.Location = new System.Drawing.Point(748, 428);
+            this.signup_role.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.signup_role.Name = "signup_role";
+            this.signup_role.PasswordChar = '\0';
+            this.signup_role.PlaceholderText = "Role";
+            this.signup_role.SelectedText = "";
+            this.signup_role.Size = new System.Drawing.Size(642, 84);
+            this.signup_role.TabIndex = 26;
+            this.signup_role.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(742, 386);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(75, 33);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Role";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
+            // SignUP_showpass
+            // 
+            this.SignUP_showpass.AutoSize = true;
+            this.SignUP_showpass.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SignUP_showpass.CheckedState.BorderRadius = 0;
+            this.SignUP_showpass.CheckedState.BorderThickness = 0;
+            this.SignUP_showpass.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SignUP_showpass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignUP_showpass.Location = new System.Drawing.Point(1135, 810);
+            this.SignUP_showpass.Name = "SignUP_showpass";
+            this.SignUP_showpass.Size = new System.Drawing.Size(255, 37);
+            this.SignUP_showpass.TabIndex = 24;
+            this.SignUP_showpass.Text = "Show Password";
+            this.SignUP_showpass.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.SignUP_showpass.UncheckedState.BorderRadius = 0;
+            this.SignUP_showpass.UncheckedState.BorderThickness = 0;
+            this.SignUP_showpass.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
+            this.SignUP_showpass.CheckedChanged += new System.EventHandler(this.SignUP_showpass_CheckedChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(733, 672);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(143, 33);
+            this.label5.TabIndex = 23;
+            this.label5.Text = "Password";
+            // 
+            // SignUP_Pass
+            // 
+            this.SignUP_Pass.BorderRadius = 30;
+            this.SignUP_Pass.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.SignUP_Pass.DefaultText = "";
+            this.SignUP_Pass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.SignUP_Pass.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.SignUP_Pass.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SignUP_Pass.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.SignUP_Pass.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.SignUP_Pass.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SignUP_Pass.Font = new System.Drawing.Font("Segoe UI", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SignUP_Pass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.SignUP_Pass.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.SignUP_Pass.IconLeft = ((System.Drawing.Image)(resources.GetObject("SignUP_Pass.IconLeft")));
+            this.SignUP_Pass.IconLeftSize = new System.Drawing.Size(30, 30);
+            this.SignUP_Pass.Location = new System.Drawing.Point(739, 714);
+            this.SignUP_Pass.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.SignUP_Pass.Name = "SignUP_Pass";
+            this.SignUP_Pass.PasswordChar = '*';
+            this.SignUP_Pass.PlaceholderText = "Password";
+            this.SignUP_Pass.SelectedText = "";
+            this.SignUP_Pass.Size = new System.Drawing.Size(651, 84);
+            this.SignUP_Pass.TabIndex = 22;
+            this.SignUP_Pass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label8
             // 
@@ -250,135 +380,6 @@
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.guna2PictureBox1.TabIndex = 2;
             this.guna2PictureBox1.TabStop = false;
-            // 
-            // SignUP_Pass
-            // 
-            this.SignUP_Pass.BorderRadius = 30;
-            this.SignUP_Pass.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.SignUP_Pass.DefaultText = "";
-            this.SignUP_Pass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.SignUP_Pass.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.SignUP_Pass.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SignUP_Pass.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.SignUP_Pass.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.SignUP_Pass.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SignUP_Pass.Font = new System.Drawing.Font("Segoe UI", 13.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SignUP_Pass.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.SignUP_Pass.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SignUP_Pass.IconLeft = ((System.Drawing.Image)(resources.GetObject("SignUP_Pass.IconLeft")));
-            this.SignUP_Pass.IconLeftSize = new System.Drawing.Size(30, 30);
-            this.SignUP_Pass.Location = new System.Drawing.Point(739, 714);
-            this.SignUP_Pass.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
-            this.SignUP_Pass.Name = "SignUP_Pass";
-            this.SignUP_Pass.PasswordChar = '*';
-            this.SignUP_Pass.PlaceholderText = "Password";
-            this.SignUP_Pass.SelectedText = "";
-            this.SignUP_Pass.Size = new System.Drawing.Size(651, 84);
-            this.SignUP_Pass.TabIndex = 22;
-            this.SignUP_Pass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(733, 672);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(143, 33);
-            this.label5.TabIndex = 23;
-            this.label5.Text = "Password";
-            // 
-            // SignUP_showpass
-            // 
-            this.SignUP_showpass.AutoSize = true;
-            this.SignUP_showpass.CheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SignUP_showpass.CheckedState.BorderRadius = 0;
-            this.SignUP_showpass.CheckedState.BorderThickness = 0;
-            this.SignUP_showpass.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.SignUP_showpass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SignUP_showpass.Location = new System.Drawing.Point(1135, 810);
-            this.SignUP_showpass.Name = "SignUP_showpass";
-            this.SignUP_showpass.Size = new System.Drawing.Size(255, 37);
-            this.SignUP_showpass.TabIndex = 24;
-            this.SignUP_showpass.Text = "Show Password";
-            this.SignUP_showpass.UncheckedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.SignUP_showpass.UncheckedState.BorderRadius = 0;
-            this.SignUP_showpass.UncheckedState.BorderThickness = 0;
-            this.SignUP_showpass.UncheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(125)))), ((int)(((byte)(137)))), ((int)(((byte)(149)))));
-            this.SignUP_showpass.CheckedChanged += new System.EventHandler(this.SignUP_showpass_CheckedChanged);
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(742, 386);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(75, 33);
-            this.label7.TabIndex = 25;
-            this.label7.Text = "Role";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
-            // signup_role
-            // 
-            this.signup_role.BorderRadius = 30;
-            this.signup_role.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.signup_role.DefaultText = "";
-            this.signup_role.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.signup_role.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.signup_role.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.signup_role.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.signup_role.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.signup_role.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.signup_role.Font = new System.Drawing.Font("Segoe UI", 13.875F);
-            this.signup_role.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.signup_role.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.signup_role.IconLeft = ((System.Drawing.Image)(resources.GetObject("signup_role.IconLeft")));
-            this.signup_role.IconLeftSize = new System.Drawing.Size(30, 30);
-            this.signup_role.Location = new System.Drawing.Point(748, 428);
-            this.signup_role.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
-            this.signup_role.Name = "signup_role";
-            this.signup_role.PasswordChar = '\0';
-            this.signup_role.PlaceholderText = "Role";
-            this.signup_role.SelectedText = "";
-            this.signup_role.Size = new System.Drawing.Size(642, 84);
-            this.signup_role.TabIndex = 26;
-            this.signup_role.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // Signup_ApprovalId
-            // 
-            this.Signup_ApprovalId.BorderRadius = 30;
-            this.Signup_ApprovalId.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Signup_ApprovalId.DefaultText = "";
-            this.Signup_ApprovalId.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
-            this.Signup_ApprovalId.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
-            this.Signup_ApprovalId.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.Signup_ApprovalId.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
-            this.Signup_ApprovalId.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.Signup_ApprovalId.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.Signup_ApprovalId.Font = new System.Drawing.Font("Segoe UI", 13.875F);
-            this.Signup_ApprovalId.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.Signup_ApprovalId.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
-            this.Signup_ApprovalId.IconLeft = ((System.Drawing.Image)(resources.GetObject("Signup_ApprovalId.IconLeft")));
-            this.Signup_ApprovalId.IconLeftSize = new System.Drawing.Size(30, 30);
-            this.Signup_ApprovalId.Location = new System.Drawing.Point(748, 569);
-            this.Signup_ApprovalId.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
-            this.Signup_ApprovalId.Name = "Signup_ApprovalId";
-            this.Signup_ApprovalId.PasswordChar = '\0';
-            this.Signup_ApprovalId.PlaceholderText = "ApprovalId ";
-            this.Signup_ApprovalId.SelectedText = "";
-            this.Signup_ApprovalId.Size = new System.Drawing.Size(642, 84);
-            this.Signup_ApprovalId.TabIndex = 27;
-            this.Signup_ApprovalId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.Signup_ApprovalId.TextChanged += new System.EventHandler(this.Signup_ApprovalId_TextChanged);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label9.Location = new System.Drawing.Point(742, 527);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(154, 33);
-            this.label9.TabIndex = 28;
-            this.label9.Text = "ApprovalId";
             // 
             // Signup
             // 

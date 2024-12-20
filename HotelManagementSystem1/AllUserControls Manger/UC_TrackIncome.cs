@@ -160,40 +160,45 @@ namespace HotelManagementSystem1.AllUserControls
 
         }
 
-       
-
-
-
-
-
-
-
-       /* private decimal GetTotalIncome(string query)
+        private void UC_TrackIncome_Load(object sender, EventArgs e)
         {
-            decimal totalIncome = 0;
 
-            try
-            {
-                using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                {
-                    connection.Open();
-                    using (SqlCommand command = new SqlCommand(query, connection))
-                    {
-                        object result = command.ExecuteScalar(); // Execute the query and fetch the result
-                        if (result != DBNull.Value)
-                        {
-                            totalIncome = Convert.ToDecimal(result);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("Error calculating total income: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        }
 
-            return totalIncome;
-        }*/
+
+
+
+
+
+
+
+
+        /* private decimal GetTotalIncome(string query)
+         {
+             decimal totalIncome = 0;
+
+             try
+             {
+                 using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
+                 {
+                     connection.Open();
+                     using (SqlCommand command = new SqlCommand(query, connection))
+                     {
+                         object result = command.ExecuteScalar(); // Execute the query and fetch the result
+                         if (result != DBNull.Value)
+                         {
+                             totalIncome = Convert.ToDecimal(result);
+                         }
+                     }
+                 }
+             }
+             catch (Exception ex)
+             {
+                 MessageBox.Show("Error calculating total income: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+             }
+
+             return totalIncome;
+         }*/
 
 
 

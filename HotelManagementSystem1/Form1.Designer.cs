@@ -105,7 +105,7 @@
             // 
             this.Login_txtPassword.BorderRadius = 30;
             this.Login_txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Login_txtPassword.DefaultText = "So123123";
+            this.Login_txtPassword.DefaultText = "aaaaaa";
             this.Login_txtPassword.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.Login_txtPassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Login_txtPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -123,7 +123,6 @@
             this.Login_txtPassword.PasswordChar = '*';
             this.Login_txtPassword.PlaceholderText = "Password";
             this.Login_txtPassword.SelectedText = "";
-            this.Login_txtPassword.SelectionStart = 8;
             this.Login_txtPassword.Size = new System.Drawing.Size(767, 120);
             this.Login_txtPassword.TabIndex = 17;
             this.Login_txtPassword.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -132,7 +131,7 @@
             // 
             this.Login_txtUsername.BorderRadius = 30;
             this.Login_txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Login_txtUsername.DefaultText = "MoSobhy";
+            this.Login_txtUsername.DefaultText = "fa_mo";
             this.Login_txtUsername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.Login_txtUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Login_txtUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -150,7 +149,6 @@
             this.Login_txtUsername.PasswordChar = '\0';
             this.Login_txtUsername.PlaceholderText = "Username";
             this.Login_txtUsername.SelectedText = "";
-            this.Login_txtUsername.SelectionStart = 7;
             this.Login_txtUsername.Size = new System.Drawing.Size(767, 120);
             this.Login_txtUsername.TabIndex = 16;
             this.Login_txtUsername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;

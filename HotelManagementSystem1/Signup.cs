@@ -279,5 +279,10 @@ namespace HotelManagementSystem1
                 SignUP_Pass.PasswordChar = '*'; // or your preferred mask character  
             }
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

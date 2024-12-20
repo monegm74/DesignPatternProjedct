@@ -109,65 +109,7 @@ namespace HotelManagementSystem1.AllUserControls
 
 
 
-        /*        private void btnRegister_Click_1(object sender, EventArgs e)
-                {
-                    if (txtNameworker.Text != "" && txtMobileWorker.Text != "" && txtGenderWorker.Text != "" && txtEmailIdWorker.Text != "" && txtSalaryWorker.Text != "" && txtJObTitaleW.Text != "")
-                    {
-                        // Get input data from the form fields
-                        String name = txtNameworker.Text;
-                        Int64 mobile = Int64.Parse(txtMobileWorker.Text);
-                        String gender = txtGenderWorker.Text;
-                        String email = txtEmailIdWorker.Text;
-                        Int64 salary = Int64.Parse(txtSalaryWorker.Text);
-                        String jobTitle = txtJObTitaleW.Text;
 
-                        // Create the SQL connection
-                        SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30");
-
-                        try
-                        {
-                            // Open the connection
-                            connect.Open();
-
-                            // SQL INSERT query
-                            String query = "INSERT INTO Workers (Email, Name, MobileNo, Gender, Salary, JobTitle) " +
-                                           "VALUES (@Email, @Name, @MobileNo, @Gender, @Salary, @JobTitle)";
-
-                            // Use SqlCommand to execute the query with parameters
-                            using (SqlCommand cmd = new SqlCommand(query, connect))
-                            {
-                                // Add parameters and assign values from the form
-                                cmd.Parameters.AddWithValue("@Email", email);
-                                cmd.Parameters.AddWithValue("@Name", name);
-                                cmd.Parameters.AddWithValue("@MobileNo", mobile);
-                                cmd.Parameters.AddWithValue("@Gender", gender);
-                                cmd.Parameters.AddWithValue("@Salary", salary);
-                                cmd.Parameters.AddWithValue("@JobTitle", jobTitle);
-
-                                // Execute the query
-                                cmd.ExecuteNonQuery();
-
-                                // Show success message
-                                MessageBox.Show("Worker Added.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            // Show error message if there's an issue with the database
-                            MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                        finally
-                        {
-                            // Close the connection
-                            connect.Close();
-                        }
-                    }
-                    else
-                    {
-                        // If any field is empty, show a warning message
-                        MessageBox.Show("Fill all Fields.", "Warning...!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }*/
 
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -260,62 +202,6 @@ namespace HotelManagementSystem1.AllUserControls
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-        /*        private void guna2Button2_Click(object sender, EventArgs e)
-                {
-                    // Check if the Email (Primary Key) is not empty
-                    if (!string.IsNullOrEmpty(guna2TextBoxEmailId.Text))
-                    {
-                        try
-                        {
-                            // SQL query to update the record
-                            string query = "UPDATE Workers SET Name = @Name, MobileNo = @MobileNo, " +
-                                           "Salary = @Salary, JobTitle = @JobTitle " +
-                                           "WHERE Email = @Email";
-
-                            // Create a SQL command with parameters
-                            using (SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                            {
-                                using (SqlCommand cmd = new SqlCommand(query, conn))
-                                {
-                                    // Add parameters to avoid SQL injection
-                                    cmd.Parameters.AddWithValue("@Email", guna2TextBoxEmailId.Text);
-                                    cmd.Parameters.AddWithValue("@Name", guna2TextBoxName.Text);
-                                    cmd.Parameters.AddWithValue("@MobileNo", guna2TextBoxMobileNo.Text);
-                                    cmd.Parameters.AddWithValue("@Salary", Convert.ToDecimal(guna2TextBoxSalary.Text));
-                                    cmd.Parameters.AddWithValue("@JobTitle", guna2TextBoxJobTitle.Text);
-
-                                    // Open the connection and execute the query
-                                    conn.Open();
-                                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                                    // Show success message if the update was successful
-                                    if (rowsAffected > 0)
-                                    {
-                                        MessageBox.Show("Record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                                       // RefreshDataGridView(); // Optional: Refresh the DataGridView
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("No record found with the specified Email.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    }
-                                }
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("Email field cannot be empty.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    }
-                }*/
-
-
-
-
 
         private void guna2Button2_Click(object sender, EventArgs e)
         {
@@ -435,45 +321,6 @@ namespace HotelManagementSystem1.AllUserControls
             }
         }
 
-
-
-
-        /* private void guna2TextBox1_TextChanged(object sender, EventArgs e)
-         {
-             // Check if the textbox is not empty
-             if (!string.IsNullOrEmpty(guna2TextBox1.Text))
-             {
-                 try
-                 {
-                     // Query to filter worker data based on the entered email
-                     string query = "SELECT * FROM Workers WHERE Email LIKE '" + guna2TextBox1.Text + "%'";
-
-                     // Fetch data using the existing method
-                     DataSet ds = fn.getData(query);
-
-                     // Set the result to the DataGridView
-                     guna2DataGridView1.DataSource = ds.Tables[0];
-                 }
-                 catch (Exception ex)
-                 {
-                     MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                 }
-             }
-             else
-             {
-                 try
-                 {
-                     // Clear the DataGridView when the TextBox is empty
-                     guna2DataGridView1.DataSource = null;
-                     guna2DataGridView1.Rows.Clear(); // Ensure rows are cleared
-                 }
-                 catch (Exception ex)
-                 {
-                     MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                 }
-             }
-         }*/
-
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
             try
@@ -532,6 +379,11 @@ namespace HotelManagementSystem1.AllUserControls
         }
 
         private void UC_mange_workers_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void tabPage2_Click(object sender, EventArgs e)
         {
 
         }
