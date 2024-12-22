@@ -14,7 +14,8 @@ namespace HotelManagementSystem1.AllUserControls
 {
     public partial class UC_MonitoringRoom : UserControl
     {
-        DPFunctions fn = new DPFunctions();
+        //  DPFunctions fn = new DPFunctions();
+        DPFunctions fn = DPFunctions.Instance;
         public UC_MonitoringRoom()
         {
             InitializeComponent();
@@ -91,7 +92,6 @@ namespace HotelManagementSystem1.AllUserControls
 
         }
 
-    
 
         private void guna2DataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

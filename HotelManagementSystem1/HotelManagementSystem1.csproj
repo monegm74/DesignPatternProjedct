@@ -106,7 +106,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="DPFunctions.cs" />
+    <Compile Include="AllClassesPatterns\DPFunctions.cs" />
     <Compile Include="ManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,6 +121,8 @@
     <Compile Include="ReceptionistForm.Designer.cs">
       <DependentUpon>ReceptionistForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AllClassesPatterns\ResidentRepository.cs" />
+    <Compile Include="AllClassesPatterns\RoomRepository.cs" />
     <Compile Include="Signup.cs">
       <SubType>Form</SubType>
     </Compile>

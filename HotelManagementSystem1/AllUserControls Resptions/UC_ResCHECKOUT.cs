@@ -14,7 +14,8 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 {
     public partial class UC_ResCHECKOUT : UserControl
     {
-        DPFunctions fn = new DPFunctions();
+       DPFunctions fn = DPFunctions.Instance;
+       // private readonly DPFunctions fn;
         public UC_ResCHECKOUT()
         {
             InitializeComponent();
@@ -49,8 +50,6 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
                 MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
-
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

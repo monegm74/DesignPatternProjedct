@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HotelManagementSystem1.Repositories;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,10 +15,25 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 {
     public partial class UC_RoomAssign : UserControl
     {
-      DPFunctions fn = new DPFunctions();   
+
+        private readonly RoomRepository _roomRepository;
+        private readonly ResidentRepository _residentRepository;
+
+/*        public UC_RoomAssign(RoomRepository roomRepository, ResidentRepository residentRepository)
+        {
+            InitializeComponent();
+            _roomRepository = roomRepository;
+            _residentRepository = residentRepository;
+        }*/
+          DPFunctions fn = DPFunctions.Instance;   
+     //   private readonly DPFunctions fn;
         public UC_RoomAssign()
         {
             InitializeComponent();
+
+            // Initialize the repositories
+            _residentRepository = new ResidentRepository();
+            _roomRepository = new RoomRepository();
         }
 
         private void guna2ComboBox3_SelectedIndexChanged(object sender, EventArgs e)
@@ -25,12 +41,43 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
         }
 
+        /*        private void UC_RoomAssign_Load(object sender, EventArgs e)
+                {
+
+
+
+                       String query = "select * from Rooms";
+                              DataSet ds = fn.getData(query);
+                              DataGridView1.DataSource = ds.Tables[0];
+                }*/
+
         private void UC_RoomAssign_Load(object sender, EventArgs e)
         {
-           String query = "select * from Rooms";
-            DataSet ds = fn.getData(query);
-            DataGridView1.DataSource = ds.Tables[0];
+            try
+            {
+                if (DPFunctions.Instance == null)
+                {
+                    MessageBox.Show("DPFunctions.Instance is null. Ensure the singleton is correctly initialized.");
+                    return;
+                }
+
+                String query = "SELECT * FROM Rooms";
+                DataSet ds = DPFunctions.Instance.getData(query);
+
+                if (ds == null || ds.Tables.Count == 0)
+                {
+                    MessageBox.Show("Dataset is null or has no tables. Check your query or database.");
+                    return;
+                }
+
+                DataGridView1.DataSource = ds.Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error during UC_RoomAssign_Load: " + ex.Message);
+            }
         }
+
 
         private void DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -44,101 +91,129 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
         }
 
 
-
-
         private void btnAddRoom_Click(object sender, EventArgs e)
         {
-            // Ensure all required fields are filled
+            // Check if repositories are initialized
+            if (_residentRepository == null || _roomRepository == null)
+            {
+                MessageBox.Show("Repositories are not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Check if controls are initialized
+            if (txtEmailres == null || txtRoNumber == null || guna2Comboxroomtype == null || guna2ComboBox2VIP == null)
+            {
+                MessageBox.Show("One or more controls are not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Check if the required fields are filled
             if (txtEmailres.Text != "" && txtRoNumber.Text != "" && guna2Comboxroomtype.Text != "" && guna2ComboBox2VIP.Text != "")
             {
-                // Extract values from input fields
-                String email = txtEmailres.Text;
-                String roomno = txtRoNumber.Text;
-                String type = guna2Comboxroomtype.Text;
-                String vipPackage = guna2ComboBox2VIP.Text;
+                string email = txtEmailres.Text;
+                string roomno = txtRoNumber.Text;
+                string type = guna2Comboxroomtype.Text;
+                string vipPackage = guna2ComboBox2VIP.Text;
 
-                // Validate VIPPackage value
-                if (vipPackage.ToUpper() != "YES" && vipPackage.ToUpper() != "NO")
+                // Check if the email exists in the residents table
+                if (!_residentRepository.IsEmailExists(email))
                 {
-                    MessageBox.Show("VIP Package must be either 'YES' or 'NO'.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("The entered email does not exist in the Residents table.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                using (SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
+                // Check if the room is available
+                if (!_roomRepository.IsRoomAvailable(roomno))
                 {
-                    conn.Open();
-
-                    // Step 1: Validate that the email exists in the Residents table
-                    string emailCheckQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @Email";
-                    using (SqlCommand cmd = new SqlCommand(emailCheckQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@Email", email);
-
-                        int emailExists = Convert.ToInt32(cmd.ExecuteScalar());
-                        if (emailExists == 0)
-                        {
-                            MessageBox.Show("The entered email does not exist in the Residents table.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-
-                    // Step 2: Check if the room exists and its status
-                    string roomStatusQuery = "SELECT Status FROM Rooms WHERE RoomID = @RoomID";
-                    using (SqlCommand cmd = new SqlCommand(roomStatusQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@RoomID", roomno);
-                        object statusObj = cmd.ExecuteScalar();
-
-                        if (statusObj == null)
-                        {
-                            MessageBox.Show("The room number does not exist. Please enter a valid room number.", "Invalid Room", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-
-                        string currentStatus = statusObj.ToString();
-                        if (currentStatus == "Occupied")
-                        {
-                            MessageBox.Show("The selected room is already occupied.", "Room Occupied", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            return;
-                        }
-                    }
-
-                    // Step 3: Update the room's status to 'Occupied' and associate it with the resident's email
-                    string updateRoomQuery = "UPDATE Rooms SET Status = 'Occupied', RoomType = @RoomType, VIPPackage = @VIPPackage, Email = @Email " +
-                                             "WHERE RoomID = @RoomID AND Status = 'Available'";
-                    using (SqlCommand cmd = new SqlCommand(updateRoomQuery, conn))
-                    {
-                        cmd.Parameters.AddWithValue("@RoomID", roomno);
-                        cmd.Parameters.AddWithValue("@RoomType", type);
-                        cmd.Parameters.AddWithValue("@VIPPackage", vipPackage.ToUpper());
-                        cmd.Parameters.AddWithValue("@Email", email);
-
-                        int rowsAffected = cmd.ExecuteNonQuery();
-
-                        if (rowsAffected > 0)
-                        {
-                            // Step 4: Update the Residents table with the assigned RoomID
-                            string updateResidentQuery = "UPDATE Residents SET RoomID = @RoomID WHERE Email = @Email";
-                            using (SqlCommand residentCmd = new SqlCommand(updateResidentQuery, conn))
-                            {
-                                residentCmd.Parameters.AddWithValue("@RoomID", roomno);
-                                residentCmd.Parameters.AddWithValue("@Email", email);
-
-                                residentCmd.ExecuteNonQuery();
-                            }
-
-                            MessageBox.Show("Room successfully booked and assigned to the resident!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show("The room status was changed before booking. Please try again.", "Room Status Changed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        }
-                    }
+                    MessageBox.Show("The room is either occupied or does not exist.", "Invalid Room", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
 
-                // Refresh form and clear fields
+                // Assign the room to the resident
+                int rowsAffected = _roomRepository.AssignRoom(roomno, type, vipPackage, email);
+                if (rowsAffected > 0)
+                {
+                    // Assign room to resident in the repository
+                    _residentRepository.AssignRoomToResident(email, roomno);
+                    MessageBox.Show("Room successfully booked and assigned to the resident!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("The room status was changed before booking. Please try again.", "Room Status Changed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                // Reload the room assignment UI
                 UC_RoomAssign_Load(this, null);
-                // clearAll(); // Uncomment if you want to clear all fields
+            }
+            else
+            {
+                MessageBox.Show("Fill All Fields.", "Warning !!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
+        private void UC_RoomAssign_Leave(object sender, EventArgs e)
+        {
+            clearAll();
+        }
+
+
+    }
+}
+
+
+/*namespace HotelManagementSystem1.AllUserControls_Resptions
+{
+    public partial class UC_RoomAssign : UserControl
+    {
+        private readonly RoomRepository _roomRepository;
+        private readonly ResidentRepository _residentRepository;
+
+        public UC_RoomAssign(RoomRepository roomRepository, ResidentRepository residentRepository)
+        {
+            InitializeComponent();
+            _roomRepository = roomRepository;
+            _residentRepository = residentRepository;
+        }
+
+        private void UC_RoomAssign_Load(object sender, EventArgs e)
+        {
+            DataGridView1.DataSource = _roomRepository.GetAllRooms();
+        }
+
+        private void btnAddRoom_Click(object sender, EventArgs e)
+        {
+            if (txtEmailres.Text != "" && txtRoNumber.Text != "" && guna2Comboxroomtype.Text != "" && guna2ComboBox2VIP.Text != "")
+            {
+                string email = txtEmailres.Text;
+                string roomno = txtRoNumber.Text;
+                string type = guna2Comboxroomtype.Text;
+                string vipPackage = guna2ComboBox2VIP.Text;
+
+                if (!_residentRepository.IsEmailExists(email))
+                {
+                    MessageBox.Show("The entered email does not exist in the Residents table.", "Invalid Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                if (!_roomRepository.IsRoomAvailable(roomno))
+                {
+                    MessageBox.Show("The room is either occupied or does not exist.", "Invalid Room", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                int rowsAffected = _roomRepository.AssignRoom(roomno, type, vipPackage, email);
+                if (rowsAffected > 0)
+                {
+                    _residentRepository.AssignRoomToResident(email, roomno);
+                    MessageBox.Show("Room successfully booked and assigned to the resident!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("The room status was changed before booking. Please try again.", "Room Status Changed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                UC_RoomAssign_Load(this, null);
             }
             else
             {
@@ -151,11 +226,11 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             clearAll();
         }
 
-
-
-
-
-
-
+        public void clearAll()
+        {
+            txtEmailres.Clear();
+            txtRoNumber.Clear();
+        }
     }
-}
+}*/
+

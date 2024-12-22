@@ -14,56 +14,13 @@ namespace HotelManagementSystem1.AllUserControls
 {
     public partial class UC_TrackIncome : UserControl
     {
-        DPFunctions fn = new DPFunctions();
+       
+        DPFunctions fn = DPFunctions.Instance;
        
         public UC_TrackIncome()
         {
             InitializeComponent();
         }
-
-        /*        private void txtserchBy_SelectedIndexChanged(object sender, EventArgs e)
-                {
-                    if (txtserchIncome.SelectedIndex == 0) // Weekly Income
-                    {
-                        // Query to fetch weekly income grouped by ResidentEmail with total income
-                        string query = "SELECT ResidentEmail, SUM(Amount) AS TotalIncome, DATEPART(WEEK, Date) AS Week " +
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(WEEK, -1, GETDATE()) " + // Fetch records from the last week
-                                       "GROUP BY ResidentEmail, DATEPART(WEEK, Date) " +
-                                       "UNION ALL " +
-                                       "SELECT 'Total', SUM(Amount), NULL " + // Calculate total income
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(WEEK, -1, GETDATE())";
-                        GetRecord(query);
-                    }
-                    else if (txtserchIncome.SelectedIndex == 1) // Monthly Income
-                    {
-                        // Query to fetch monthly income grouped by ResidentEmail with total income
-                        string query = "SELECT ResidentEmail, SUM(Amount) AS TotalIncome, MONTH(Date) AS Month, YEAR(Date) AS Year " +
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(MONTH, -1, GETDATE()) " + // Fetch records from the last month
-                                       "GROUP BY ResidentEmail, MONTH(Date), YEAR(Date) " +
-                                       "UNION ALL " +
-                                       "SELECT 'Total', SUM(Amount), NULL, NULL " + // Calculate total income
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(MONTH, -1, GETDATE())";
-                        GetRecord(query);
-                    }
-                    else if (txtserchIncome.SelectedIndex == 2) // Annual Income
-                    {
-                        // Query to fetch annual income grouped by ResidentEmail with total income
-                        string query = "SELECT ResidentEmail, SUM(Amount) AS TotalIncome, YEAR(Date) AS Year " +
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(YEAR, -1, GETDATE()) " + // Fetch records from the last year
-                                       "GROUP BY ResidentEmail, YEAR(Date) " +
-                                       "UNION ALL " +
-                                       "SELECT 'Total', SUM(Amount), NULL " + // Calculate total income
-                                       "FROM Income " +
-                                       "WHERE Date >= DATEADD(YEAR, -1, GETDATE())";
-                        GetRecord(query);
-                    }
-                }*/
-
         private void txtserchBy_SelectedIndexChanged(object sender, EventArgs e)
         {
             decimal totalIncome = 0;
@@ -164,45 +121,5 @@ namespace HotelManagementSystem1.AllUserControls
         {
 
         }
-
-
-
-
-
-
-
-
-
-        /* private decimal GetTotalIncome(string query)
-         {
-             decimal totalIncome = 0;
-
-             try
-             {
-                 using (SqlConnection connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                 {
-                     connection.Open();
-                     using (SqlCommand command = new SqlCommand(query, connection))
-                     {
-                         object result = command.ExecuteScalar(); // Execute the query and fetch the result
-                         if (result != DBNull.Value)
-                         {
-                             totalIncome = Convert.ToDecimal(result);
-                         }
-                     }
-                 }
-             }
-             catch (Exception ex)
-             {
-                 MessageBox.Show("Error calculating total income: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-             }
-
-             return totalIncome;
-         }*/
-
-
-
-
-
     }
 }

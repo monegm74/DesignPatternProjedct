@@ -13,7 +13,8 @@ namespace HotelManagementSystem1.AllUserControls
 {
     public partial class UC_ResidentInfo : UserControl
     {
-        DPFunctions fn = new DPFunctions();
+        //DPFunctions fn = new DPFunctions();
+        DPFunctions fn = DPFunctions.Instance;
         public UC_ResidentInfo()
         {
             InitializeComponent();
@@ -55,8 +56,6 @@ namespace HotelManagementSystem1.AllUserControls
             }
         }
 
-
-
         public void GetRecord(String query)
         {
             DataSet ds = fn.getData(query);
@@ -65,6 +64,11 @@ namespace HotelManagementSystem1.AllUserControls
         }
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
+        private void UC_ResidentInfo_Load(object sender, EventArgs e)
         {
 
         }

@@ -152,6 +152,7 @@
             this.Controls.Add(this.label2);
             this.Name = "UC_ResidentInfo";
             this.Size = new System.Drawing.Size(2593, 1595);
+            this.Load += new System.EventHandler(this.UC_ResidentInfo_Load);
             ((System.ComponentModel.ISupportInitialize)(this.guna2DataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

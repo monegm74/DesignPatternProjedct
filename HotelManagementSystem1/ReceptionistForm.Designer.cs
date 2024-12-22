@@ -39,12 +39,12 @@
             this.btnExist2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnMinimize = new Guna.UI2.WinForms.Guna2CircleButton();
             this.panalResp = new System.Windows.Forms.Panel();
+            this.uC_ResCHECKOUT1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT();
             this.uC_RoomAssign1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign();
             this.uC_ManageResidents1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse3 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
-            this.uC_ResCHECKOUT1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT();
             this.panel2.SuspendLayout();
             this.panalResp.SuspendLayout();
             this.SuspendLayout();
@@ -223,6 +223,14 @@
             this.panalResp.Size = new System.Drawing.Size(2673, 1298);
             this.panalResp.TabIndex = 10;
             // 
+            // uC_ResCHECKOUT1
+            // 
+            this.uC_ResCHECKOUT1.BackColor = System.Drawing.Color.White;
+            this.uC_ResCHECKOUT1.Location = new System.Drawing.Point(3, 3);
+            this.uC_ResCHECKOUT1.Name = "uC_ResCHECKOUT1";
+            this.uC_ResCHECKOUT1.Size = new System.Drawing.Size(2670, 1595);
+            this.uC_ResCHECKOUT1.TabIndex = 2;
+            // 
             // uC_RoomAssign1
             // 
             this.uC_RoomAssign1.BackColor = System.Drawing.Color.White;
@@ -254,19 +262,11 @@
             this.guna2Elipse3.BorderRadius = 30;
             this.guna2Elipse3.TargetControl = this;
             // 
-            // uC_ResCHECKOUT1
-            // 
-            this.uC_ResCHECKOUT1.BackColor = System.Drawing.Color.White;
-            this.uC_ResCHECKOUT1.Location = new System.Drawing.Point(3, 3);
-            this.uC_ResCHECKOUT1.Name = "uC_ResCHECKOUT1";
-            this.uC_ResCHECKOUT1.Size = new System.Drawing.Size(2670, 1595);
-            this.uC_ResCHECKOUT1.TabIndex = 2;
-            // 
             // ReceptionistForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.CadetBlue;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.ClientSize = new System.Drawing.Size(2886, 1520);
             this.Controls.Add(this.panalResp);
             this.Controls.Add(this.btnMinimize);

@@ -17,7 +17,8 @@ namespace HotelManagementSystem1.AllUserControls
     {
 
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30");
-        DPFunctions fn = new DPFunctions();
+        // DPFunctions fn = new DPFunctions();
+        DPFunctions fn = DPFunctions.Instance;
         public UC_mange_workers()
         {
             InitializeComponent();
@@ -106,11 +107,6 @@ namespace HotelManagementSystem1.AllUserControls
                 MessageBox.Show("Fill all Fields.", "Warning...!", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-
-
-
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 1)
@@ -278,8 +274,6 @@ namespace HotelManagementSystem1.AllUserControls
                 MessageBox.Show("Please select a row in the table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-
-
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {

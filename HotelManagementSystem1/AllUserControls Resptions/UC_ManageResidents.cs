@@ -14,18 +14,20 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 {
     public partial class UC_ManageResidents : UserControl
     {
-        DPFunctions fn = new DPFunctions();
+        DPFunctions fn = DPFunctions.Instance;
+       // private readonly DPFunctions fn;
         public UC_ManageResidents()
         {
             InitializeComponent();
+
+            // Using Singleton to get a single instance of DPFunctions
+            //fn = DPFunctions.GetInstance();
         }
 
         private void label2_Click(object sender, EventArgs e)
         {
 
         }
-
-
 
         public void Setres(DataGridView dg)
         {
@@ -117,7 +119,7 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
                             cmd.ExecuteNonQuery();
 
-           
+
                             ClearAll();
 
                             MessageBox.Show("Resident added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -300,9 +302,6 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             }
         }
 
-
-
-
         private void guna2TextBox1_TextChanged(object sender, EventArgs e)
         {
             try
@@ -477,5 +476,10 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
         {
             ClearAll();
         }
+
+
     }
 }
+
+
+

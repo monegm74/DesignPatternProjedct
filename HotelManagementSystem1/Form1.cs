@@ -16,7 +16,6 @@ namespace HotelManagementSystem1
     {
         SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30");
 
-
         public Form1()
         {
             InitializeComponent();

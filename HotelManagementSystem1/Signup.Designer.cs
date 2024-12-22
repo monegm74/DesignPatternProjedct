@@ -75,9 +75,9 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panel1.Location = new System.Drawing.Point(1, 1);
+            this.panel1.Location = new System.Drawing.Point(1438, 350);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1545, 1019);
+            this.panel1.Size = new System.Drawing.Size(1582, 1019);
             this.panel1.TabIndex = 1;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -93,7 +93,7 @@
             // 
             // Signup_ApprovalId
             // 
-            this.Signup_ApprovalId.BorderRadius = 30;
+            this.Signup_ApprovalId.BorderRadius = 22;
             this.Signup_ApprovalId.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.Signup_ApprovalId.DefaultText = "";
             this.Signup_ApprovalId.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -113,14 +113,14 @@
             this.Signup_ApprovalId.PasswordChar = '\0';
             this.Signup_ApprovalId.PlaceholderText = "ApprovalId ";
             this.Signup_ApprovalId.SelectedText = "";
-            this.Signup_ApprovalId.Size = new System.Drawing.Size(642, 84);
+            this.Signup_ApprovalId.Size = new System.Drawing.Size(720, 84);
             this.Signup_ApprovalId.TabIndex = 27;
             this.Signup_ApprovalId.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.Signup_ApprovalId.TextChanged += new System.EventHandler(this.Signup_ApprovalId_TextChanged);
             // 
             // signup_role
             // 
-            this.signup_role.BorderRadius = 30;
+            this.signup_role.BorderRadius = 22;
             this.signup_role.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.signup_role.DefaultText = "";
             this.signup_role.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -140,7 +140,7 @@
             this.signup_role.PasswordChar = '\0';
             this.signup_role.PlaceholderText = "Role";
             this.signup_role.SelectedText = "";
-            this.signup_role.Size = new System.Drawing.Size(642, 84);
+            this.signup_role.Size = new System.Drawing.Size(720, 84);
             this.signup_role.TabIndex = 26;
             this.signup_role.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -163,7 +163,7 @@
             this.SignUP_showpass.CheckedState.BorderThickness = 0;
             this.SignUP_showpass.CheckedState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.SignUP_showpass.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.SignUP_showpass.Location = new System.Drawing.Point(1135, 810);
+            this.SignUP_showpass.Location = new System.Drawing.Point(1213, 810);
             this.SignUP_showpass.Name = "SignUP_showpass";
             this.SignUP_showpass.Size = new System.Drawing.Size(255, 37);
             this.SignUP_showpass.TabIndex = 24;
@@ -186,7 +186,7 @@
             // 
             // SignUP_Pass
             // 
-            this.SignUP_Pass.BorderRadius = 30;
+            this.SignUP_Pass.BorderRadius = 22;
             this.SignUP_Pass.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SignUP_Pass.DefaultText = "";
             this.SignUP_Pass.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -200,13 +200,13 @@
             this.SignUP_Pass.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
             this.SignUP_Pass.IconLeft = ((System.Drawing.Image)(resources.GetObject("SignUP_Pass.IconLeft")));
             this.SignUP_Pass.IconLeftSize = new System.Drawing.Size(30, 30);
-            this.SignUP_Pass.Location = new System.Drawing.Point(739, 714);
+            this.SignUP_Pass.Location = new System.Drawing.Point(748, 714);
             this.SignUP_Pass.Margin = new System.Windows.Forms.Padding(9, 9, 9, 9);
             this.SignUP_Pass.Name = "SignUP_Pass";
             this.SignUP_Pass.PasswordChar = '*';
             this.SignUP_Pass.PlaceholderText = "Password";
             this.SignUP_Pass.SelectedText = "";
-            this.SignUP_Pass.Size = new System.Drawing.Size(651, 84);
+            this.SignUP_Pass.Size = new System.Drawing.Size(729, 84);
             this.SignUP_Pass.TabIndex = 22;
             this.SignUP_Pass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -244,7 +244,7 @@
             // 
             // SignUP_txtusername
             // 
-            this.SignUP_txtusername.BorderRadius = 30;
+            this.SignUP_txtusername.BorderRadius = 22;
             this.SignUP_txtusername.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SignUP_txtusername.DefaultText = "";
             this.SignUP_txtusername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -264,13 +264,13 @@
             this.SignUP_txtusername.PasswordChar = '\0';
             this.SignUP_txtusername.PlaceholderText = "Username";
             this.SignUP_txtusername.SelectedText = "";
-            this.SignUP_txtusername.Size = new System.Drawing.Size(642, 84);
+            this.SignUP_txtusername.Size = new System.Drawing.Size(720, 84);
             this.SignUP_txtusername.TabIndex = 17;
             this.SignUP_txtusername.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // SignUP_txtEmailAdd
             // 
-            this.SignUP_txtEmailAdd.BorderRadius = 30;
+            this.SignUP_txtEmailAdd.BorderRadius = 22;
             this.SignUP_txtEmailAdd.Cursor = System.Windows.Forms.Cursors.IBeam;
             this.SignUP_txtEmailAdd.DefaultText = "";
             this.SignUP_txtEmailAdd.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
@@ -290,7 +290,7 @@
             this.SignUP_txtEmailAdd.PasswordChar = '\0';
             this.SignUP_txtEmailAdd.PlaceholderText = "Email Address";
             this.SignUP_txtEmailAdd.SelectedText = "";
-            this.SignUP_txtEmailAdd.Size = new System.Drawing.Size(642, 84);
+            this.SignUP_txtEmailAdd.Size = new System.Drawing.Size(720, 84);
             this.SignUP_txtEmailAdd.TabIndex = 16;
             this.SignUP_txtEmailAdd.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.SignUP_txtEmailAdd.TextChanged += new System.EventHandler(this.SignUP_txtEmailAdd_TextChanged);
@@ -386,12 +386,15 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(1547, 1021);
+            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(2646, 1453);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Signup";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Signup";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
