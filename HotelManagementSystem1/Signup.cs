@@ -36,8 +36,6 @@ namespace HotelManagementSystem1
             Application.Exit();
         }
 
-
-
         private void btnRegister_Click(object sender, EventArgs e)
         {
             if (SignUP_txtEmailAdd.Text == "" || SignUP_txtusername.Text == "" || SignUP_Pass.Text == "" || Signup_ApprovalId.Text == "")

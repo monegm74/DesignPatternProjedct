@@ -61,7 +61,7 @@
             this.panel2.Location = new System.Drawing.Point(90, 4);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(2673, 257);
+            this.panel2.Size = new System.Drawing.Size(3614, 257);
             this.panel2.TabIndex = 7;
             // 
             // btnManageRes
@@ -137,6 +137,7 @@
             this.BTN_ROOMASS.TabIndex = 7;
             this.BTN_ROOMASS.Text = "Assign Room ";
             this.BTN_ROOMASS.Click += new System.EventHandler(this.BTN_ROOMMonitor_Click);
+            this.BTN_ROOMASS.Leave += new System.EventHandler(this.BTN_ROOMASS_Leave);
             // 
             // MovingPanal
             // 
@@ -171,6 +172,7 @@
             this.btnCheckout.TabIndex = 3;
             this.btnCheckout.Text = "Checkout";
             this.btnCheckout.Click += new System.EventHandler(this.btnTrackIncome_Click);
+            this.btnCheckout.Leave += new System.EventHandler(this.btnCheckout_Leave);
             // 
             // btnExist2
             // 
@@ -183,7 +185,7 @@
             this.btnExist2.ForeColor = System.Drawing.Color.White;
             this.btnExist2.Image = ((System.Drawing.Image)(resources.GetObject("btnExist2.Image")));
             this.btnExist2.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnExist2.Location = new System.Drawing.Point(-36, -27);
+            this.btnExist2.Location = new System.Drawing.Point(-36, -23);
             this.btnExist2.Margin = new System.Windows.Forms.Padding(4);
             this.btnExist2.Name = "btnExist2";
             this.btnExist2.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
@@ -202,7 +204,7 @@
             this.btnMinimize.ForeColor = System.Drawing.Color.White;
             this.btnMinimize.Image = ((System.Drawing.Image)(resources.GetObject("btnMinimize.Image")));
             this.btnMinimize.ImageSize = new System.Drawing.Size(30, 30);
-            this.btnMinimize.Location = new System.Drawing.Point(-34, 69);
+            this.btnMinimize.Location = new System.Drawing.Point(-34, 77);
             this.btnMinimize.Margin = new System.Windows.Forms.Padding(4);
             this.btnMinimize.Name = "btnMinimize";
             this.btnMinimize.ShadowDecoration.Mode = Guna.UI2.WinForms.Enums.ShadowMode.Circle;
@@ -220,7 +222,7 @@
             this.panalResp.Controls.Add(this.uC_ManageResidents1);
             this.panalResp.Location = new System.Drawing.Point(90, 289);
             this.panalResp.Name = "panalResp";
-            this.panalResp.Size = new System.Drawing.Size(2673, 1298);
+            this.panalResp.Size = new System.Drawing.Size(3536, 1298);
             this.panalResp.TabIndex = 10;
             // 
             // uC_ResCHECKOUT1
@@ -228,7 +230,7 @@
             this.uC_ResCHECKOUT1.BackColor = System.Drawing.Color.White;
             this.uC_ResCHECKOUT1.Location = new System.Drawing.Point(3, 3);
             this.uC_ResCHECKOUT1.Name = "uC_ResCHECKOUT1";
-            this.uC_ResCHECKOUT1.Size = new System.Drawing.Size(2670, 1595);
+            this.uC_ResCHECKOUT1.Size = new System.Drawing.Size(3611, 1595);
             this.uC_ResCHECKOUT1.TabIndex = 2;
             // 
             // uC_RoomAssign1
@@ -267,7 +269,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.ClientSize = new System.Drawing.Size(2886, 1520);
+            this.ClientSize = new System.Drawing.Size(3749, 1520);
             this.Controls.Add(this.panalResp);
             this.Controls.Add(this.btnMinimize);
             this.Controls.Add(this.btnExist2);

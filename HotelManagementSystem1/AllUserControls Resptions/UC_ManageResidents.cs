@@ -1,4 +1,4 @@
-﻿using Guna.UI2.WinForms;
+﻿/*using Guna.UI2.WinForms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,40 +14,25 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 {
     public partial class UC_ManageResidents : UserControl
     {
-        DPFunctions fn = DPFunctions.Instance;
-       // private readonly DPFunctions fn;
+        private readonly IResidentService _residentService;
+        private DPFunctions fn = DPFunctions.Instance;
+
         public UC_ManageResidents()
         {
             InitializeComponent();
-
-            // Using Singleton to get a single instance of DPFunctions
-            //fn = DPFunctions.GetInstance();
-        }
-
-        private void label2_Click(object sender, EventArgs e)
-        {
-
+            _residentService = new ResidentServiceProxy();
         }
 
         public void Setres(DataGridView dg)
         {
-            String query = "select * from Residents";
-            DataSet ds = fn.getData(query);
-            dg.DataSource = ds.Tables[0];
+            dg.DataSource = _residentService.GetResidents().Tables[0];
         }
 
         private void RefreshDataGridView()
         {
             try
             {
-                // SQL query to fetch all records from the Workers table
-                string query = "SELECT * FROM Residents";
-
-                // Fetch data using the existing method or another method you may have
-                DataSet ds = fn.getData(query);
-
-                // Bind the data to the DataGridView
-                guna2DataGridView1.DataSource = ds.Tables[0];
+                guna2DataGridView1.DataSource = _residentService.GetResidents().Tables[0];
             }
             catch (Exception ex)
             {
@@ -57,248 +42,98 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
         private void btnAddW_Click(object sender, EventArgs e)
         {
-            // Check if all required fields are filled
-            if (!string.IsNullOrEmpty(txtNameResident.Text) &&
-                !string.IsNullOrEmpty(txtMobileRes.Text) &&
-                !string.IsNullOrEmpty(txtGenderRes.Text) &&
-                !string.IsNullOrEmpty(txtEmailIdres.Text) &&
-                !string.IsNullOrEmpty(txtcheckinRes.Text) &&
-                !string.IsNullOrEmpty(txtCheckoutRes.Text) &&
-                !string.IsNullOrEmpty(txtBoardingRes.Text))
+            try
             {
-                try
-                {
-                    // Get input values from the form
-                    string name = txtNameResident.Text;
-                    string contactInfo = txtMobileRes.Text;
-                    string gender = txtGenderRes.Text;
-                    string email = txtEmailIdres.Text;
-                    DateTime checkInDate = txtcheckinRes.Value;
-                    DateTime? checkOutDate = string.IsNullOrEmpty(txtCheckoutRes.Text) ? (DateTime?)null : txtCheckoutRes.Value;
-                    string boardingType = txtBoardingRes.Text;
+                _residentService.AddResident(
+                    txtNameResident.Text,
+                    txtMobileRes.Text,
+                    txtGenderRes.Text,
+                    txtEmailIdres.Text,
+                    txtcheckinRes.Value,
+                    txtCheckoutRes.Value,
+                    txtBoardingRes.Text
+                );
 
-                    // Validate boarding type
-                    string[] validBoardingTypes = { "Full Board", "Half Board", "Bed and Breakfast" };
-                    if (!validBoardingTypes.Contains(boardingType))
-                    {
-                        MessageBox.Show("Invalid Boarding Type. Please select a valid option: Full Board, Half Board, or Bed and Breakfast.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    // Create SQL connection
-                    using (SqlConnection connect = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                    {
-                        connect.Open();
-
-                        // Check if email already exists
-                        string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @Email";
-                        using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, connect))
-                        {
-                            checkCmd.Parameters.AddWithValue("@Email", email);
-                            int emailCount = (int)checkCmd.ExecuteScalar();
-
-                            if (emailCount > 0)
-                            {
-                                MessageBox.Show("Error: The email address is already in use. Please use a unique email.", "Duplicate Email", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                                return;
-                            }
-                        }
-
-                        // Insert resident details
-                        string query = "INSERT INTO Residents (Email, Name, ContactInfo, Gender, CheckInDate, CheckOutDate, BoardingType) " +
-                                       "VALUES (@Email, @Name, @ContactInfo, @Gender, @CheckInDate, @CheckOutDate, @BoardingType)";
-                        using (SqlCommand cmd = new SqlCommand(query, connect))
-                        {
-                            cmd.Parameters.AddWithValue("@Email", email);
-                            cmd.Parameters.AddWithValue("@Name", name);
-                            cmd.Parameters.AddWithValue("@ContactInfo", contactInfo);
-                            cmd.Parameters.AddWithValue("@Gender", gender);
-                            cmd.Parameters.AddWithValue("@CheckInDate", checkInDate);
-                            cmd.Parameters.AddWithValue("@CheckOutDate", checkOutDate.HasValue ? (object)checkOutDate.Value : DBNull.Value);
-                            cmd.Parameters.AddWithValue("@BoardingType", boardingType);
-
-                            cmd.ExecuteNonQuery();
-
-
-                            ClearAll();
-
-                            MessageBox.Show("Resident added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error: " + ex.Message, "Database Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                MessageBox.Show("Resident added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearAll();
             }
-            else
+            catch (Exception ex)
             {
-                MessageBox.Show("Please fill all the required fields.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2ButtonUPdateWorker_Click(object sender, EventArgs e)
+        {
+            if (guna2DataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row in the table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string oldEmail = guna2DataGridView1.SelectedRows[0].Cells["Email"].Value.ToString();
+                int? roomId = null;
+                if (int.TryParse(guna2TextBoxRoomNo.Text, out int parsedRoomId))
+                {
+                    roomId = parsedRoomId;
+                }
+
+                _residentService.UpdateResident(
+                    oldEmail,
+                    guna2TextBoxEmailId.Text,
+                    guna2TextBoxName.Text,
+                    guna2TextBoxMobileNo.Text,
+                    guna2DateTimePickercheckin.Value,
+                    guna2DateTimePickercheckout.Value,
+                    guna2ComboBoxboarding.Text,
+                    roomId
+                );
+
+                MessageBox.Show("Record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshDataGridView();
+                ClearAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure the click is valid (not on the header row or invalid index)
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Check that the clicked cell has a value
                 if (guna2DataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    // Fetch the entire row where the click occurred
                     DataGridViewRow row = guna2DataGridView1.Rows[e.RowIndex];
 
-                    // Populate the TextBoxes with respective column values
-                    guna2TextBoxEmailId.Text = row.Cells["Email"].Value?.ToString();       // Email column
-                    guna2TextBoxName.Text = row.Cells["Name"].Value?.ToString();          // Name column
-                    guna2TextBoxMobileNo.Text = row.Cells["ContactInfo"].Value?.ToString(); // ContactInfo column
-                    guna2DateTimePickercheckin.Value = Convert.ToDateTime(row.Cells["CheckInDate"].Value); // CheckInDate column
+                    guna2TextBoxEmailId.Text = row.Cells["Email"].Value?.ToString();
+                    guna2TextBoxName.Text = row.Cells["Name"].Value?.ToString();
+                    guna2TextBoxMobileNo.Text = row.Cells["ContactInfo"].Value?.ToString();
+                    guna2DateTimePickercheckin.Value = Convert.ToDateTime(row.Cells["CheckInDate"].Value);
 
-                    // Check if CheckOutDate is not null before setting it
                     if (row.Cells["CheckOutDate"].Value != DBNull.Value && row.Cells["CheckOutDate"].Value != null)
                     {
-                        guna2DateTimePickercheckout.Value = Convert.ToDateTime(row.Cells["CheckOutDate"].Value); // CheckOutDate column
+                        guna2DateTimePickercheckout.Value = Convert.ToDateTime(row.Cells["CheckOutDate"].Value);
                     }
                     else
                     {
-                        guna2DateTimePickercheckout.Value = DateTime.Now; // Default to today's date if null
+                        guna2DateTimePickercheckout.Value = DateTime.Now;
                     }
 
-                    guna2ComboBoxboarding.Text = row.Cells["BoardingType"].Value?.ToString(); // BoardingType column
+                    guna2ComboBoxboarding.Text = row.Cells["BoardingType"].Value?.ToString();
 
-                    // Check if RoomID is not null before setting it
                     if (row.Cells["RoomID"].Value != DBNull.Value && row.Cells["RoomID"].Value != null)
                     {
-                        guna2TextBoxRoomNo.Text = row.Cells["RoomID"].Value?.ToString();  // RoomID column
+                        guna2TextBoxRoomNo.Text = row.Cells["RoomID"].Value?.ToString();
                     }
                     else
                     {
-                        guna2TextBoxRoomNo.Text = ""; // Leave RoomID empty if null
+                        guna2TextBoxRoomNo.Text = "";
                     }
                 }
-            }
-
-        }
-
-        private void guna2DateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void guna2ButtonUPdateWorker_Click(object sender, EventArgs e)
-        {
-            // Ensure a row is selected in the DataGridView
-            if (guna2DataGridView1.SelectedRows.Count > 0)
-            {
-                try
-                {
-                    // Get the current Email (Primary Key) from the selected row
-                    string oldEmail = guna2DataGridView1.SelectedRows[0].Cells["Email"].Value.ToString();
-                    string newEmail = guna2TextBoxEmailId.Text;
-
-                    // SQL queries
-                    string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @NewEmail AND Email != @OldEmail";
-                    string checkRoomQuery = "SELECT COUNT(*) FROM Residents WHERE RoomID = @RoomID AND Email != @OldEmail";
-                    string updateResidentQuery = "UPDATE Residents SET Name = @Name, ContactInfo = @ContactInfo, CheckInDate = @CheckInDate, " +
-                                                 "CheckOutDate = @CheckOutDate, BoardingType = @BoardingType, RoomID = @RoomID, Email = @NewEmail " +
-                                                 "WHERE Email = @OldEmail";
-
-                    using (SqlConnection conn = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                    {
-                        conn.Open();
-
-                        // Step 1: Check if the new email already exists
-                        using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, conn))
-                        {
-                            checkCmd.Parameters.AddWithValue("@NewEmail", newEmail);
-                            checkCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
-
-                            int emailCount = Convert.ToInt32(checkCmd.ExecuteScalar());
-                            if (emailCount > 0)
-                            {
-                                MessageBox.Show("The new email is already in use by another record.", "Duplicate Email", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                return; // Stop further execution
-                            }
-                        }
-
-                        // Step 2: Check if the RoomID is already assigned to another resident
-                        if (int.TryParse(guna2TextBoxRoomNo.Text, out int roomId))
-                        {
-                            using (SqlCommand checkRoomCmd = new SqlCommand(checkRoomQuery, conn))
-                            {
-                                checkRoomCmd.Parameters.AddWithValue("@RoomID", roomId);
-                                checkRoomCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
-
-                                int roomCount = Convert.ToInt32(checkRoomCmd.ExecuteScalar());
-                                if (roomCount > 0)
-                                {
-                                    MessageBox.Show("The selected RoomID is already assigned to another resident.", "Duplicate RoomID", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                                    return; // Stop further execution
-                                }
-                            }
-                        }
-
-                        // Step 3: Update the record in the Residents table
-                        using (SqlCommand updateResidentCmd = new SqlCommand(updateResidentQuery, conn))
-                        {
-                            updateResidentCmd.Parameters.AddWithValue("@OldEmail", oldEmail); // Old Email to identify the record
-                            updateResidentCmd.Parameters.AddWithValue("@NewEmail", newEmail); // New Email to update
-                            updateResidentCmd.Parameters.AddWithValue("@Name", guna2TextBoxName.Text);
-                            updateResidentCmd.Parameters.AddWithValue("@ContactInfo", guna2TextBoxMobileNo.Text);
-                            updateResidentCmd.Parameters.AddWithValue("@CheckInDate", guna2DateTimePickercheckin.Value.Date);
-
-                            // Check if CheckOutDate is set
-                            if (guna2DateTimePickercheckout.Value != DateTime.MinValue)
-                            {
-                                updateResidentCmd.Parameters.AddWithValue("@CheckOutDate", guna2DateTimePickercheckout.Value.Date);
-                            }
-                            else
-                            {
-                                updateResidentCmd.Parameters.AddWithValue("@CheckOutDate", DBNull.Value);
-                            }
-
-                            updateResidentCmd.Parameters.AddWithValue("@BoardingType", guna2ComboBoxboarding.Text);
-
-                            // Add RoomID
-                            if (int.TryParse(guna2TextBoxRoomNo.Text, out roomId))
-                            {
-                                updateResidentCmd.Parameters.AddWithValue("@RoomID", roomId);
-                            }
-                            else
-                            {
-                                updateResidentCmd.Parameters.AddWithValue("@RoomID", DBNull.Value);
-                            }
-
-                            int rowsAffected = updateResidentCmd.ExecuteNonQuery();
-
-                            // Show a success message if the update was successful
-                            if (rowsAffected > 0)
-                            {
-                                MessageBox.Show("Record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                                // Refresh the DataGridView to reflect updated data
-                                RefreshDataGridView();
-
-                                // Clear all fields after successful update
-                                ClearAll();
-                            }
-                            else
-                            {
-                                MessageBox.Show("No record found with the specified Email.", "Update Failed", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                            }
-                        }
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Show error message if something goes wrong
-                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                // Show a warning message if no row is selected
-                MessageBox.Show("Please select a row in the table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -306,25 +141,7 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
         {
             try
             {
-                string query;
-
-                // Check if the textbox is empty
-                if (string.IsNullOrEmpty(guna2TextBoxemailres.Text))
-                {
-                    // Query to fetch all workers when the TextBox is empty
-                    query = "SELECT * FROM Residents";
-                }
-                else
-                {
-                    // Query to filter workers based on entered email
-                    query = "SELECT * FROM Residents WHERE Email LIKE '" + guna2TextBoxemailres.Text + "%'";
-                }
-
-                // Fetch data using the existing method
-                DataSet ds = fn.getData(query);
-
-                // Bind the result to the DataGridView
-                guna2DataGridView1.DataSource = ds.Tables[0];
+                guna2DataGridView1.DataSource = _residentService.GetResidents(guna2TextBoxemailres.Text).Tables[0];
             }
             catch (Exception ex)
             {
@@ -346,32 +163,14 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
         private void guna2ComboBoxboarding_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            // Event handler for boarding type selection
         }
 
         private void txtEmailW_TextChanged(object sender, EventArgs e)
         {
             try
             {
-                string query;
-
-                // Check if the textbox is empty
-                if (string.IsNullOrEmpty(txtEmailres.Text))
-                {
-                    // Query to fetch all workers when the TextBox is empty
-                    query = "SELECT * FROM Residents";
-                }
-                else
-                {
-                    // Query to filter workers based on entered email
-                    query = "SELECT * FROM Residents WHERE Email LIKE '" + txtEmailres.Text + "%'";
-                }
-
-                // Fetch data using the existing method
-                DataSet ds = fn.getData(query);
-
-                // Bind the result to the DataGridView
-                guna2DataGridView2res.DataSource = ds.Tables[0];
+                guna2DataGridView2res.DataSource = _residentService.GetResidents(txtEmailres.Text).Tables[0];
             }
             catch (Exception ex)
             {
@@ -381,82 +180,42 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
         private void guna2Button1_Click(object sender, EventArgs e)
         {
-            if (txtEmailres.Text != "")
-            {
-                if (MessageBox.Show("Are You Sure?", "Confirmation...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
-                {
-                    try
-                    {
-                        // Create and open the connection
-                        using (SqlConnection connection = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
-                        {
-                            connection.Open();
-
-                            // Step 1: Delete rows in the Income table that reference this resident
-                            string deleteIncomeQuery = "DELETE FROM Income WHERE ResidentEmail = @Email";
-                            using (SqlCommand cmdIncome = new SqlCommand(deleteIncomeQuery, connection))
-                            {
-                                cmdIncome.Parameters.AddWithValue("@Email", txtEmailres.Text);
-                                cmdIncome.ExecuteNonQuery();
-                            }
-
-                            // Step 2: Delete rows in the Rooms table that reference this resident
-                            string deleteRoomsQuery = "DELETE FROM Rooms WHERE Email = @Email";
-                            using (SqlCommand cmdRooms = new SqlCommand(deleteRoomsQuery, connection))
-                            {
-                                cmdRooms.Parameters.AddWithValue("@Email", txtEmailres.Text);
-                                cmdRooms.ExecuteNonQuery();
-                            }
-
-                            // Step 3: Delete the resident from the Residents table
-                            string deleteResidentQuery = "DELETE FROM Residents WHERE Email = @Email";
-                            using (SqlCommand cmdResident = new SqlCommand(deleteResidentQuery, connection))
-                            {
-                                cmdResident.Parameters.AddWithValue("@Email", txtEmailres.Text);
-                                cmdResident.ExecuteNonQuery();
-                            }
-
-                            MessageBox.Show("Record Deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                            // Refresh the tab or perform any necessary UI updates
-                            tabControl1_SelectedIndexChanged_1(this, null);
-                        }
-                    }
-                    catch (Exception ex)
-                    {
-                        // Handle errors and show a message box
-                        MessageBox.Show("Error: " + ex.Message);
-                    }
-                }
-            }
-            else
+            if (string.IsNullOrEmpty(txtEmailres.Text))
             {
                 MessageBox.Show("Please enter a valid email address.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are You Sure?", "Confirmation...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    _residentService.DeleteResident(txtEmailres.Text);
+                    MessageBox.Show("Record Deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tabControl1_SelectedIndexChanged_1(this, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
-
-
         private void guna2DataGridView2res_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            // Ensure the click is valid (not on the header row or invalid index)
             if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
             {
-                // Ensure the clicked cell has a value
                 if (guna2DataGridView2res.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    // Fetch the entire row where the click occurred
                     DataGridViewRow row = guna2DataGridView2res.Rows[e.RowIndex];
-
-                    // Get the Email value from the clicked row and set it to the TextBox
-                    txtEmailres.Text = row.Cells["Email"].Value.ToString();  // Assuming "Email" is the column name
+                    txtEmailres.Text = row.Cells["Email"].Value.ToString();
                 }
             }
         }
 
         private void UC_ManageResidents_Load(object sender, EventArgs e)
         {
-
+            // Initialize any required data or UI elements when the control loads
         }
 
         public void ClearAll()
@@ -477,9 +236,767 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             ClearAll();
         }
 
+        private void label2_Click(object sender, EventArgs e)
+        {
+            // Event handler for label click
+        }
 
+        private void guna2DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            // Event handler for date time picker value change
+        }
+        // Interface defining resident management operations
+        public interface IResidentService
+    {
+        void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType);
+        void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId);
+        void DeleteResident(string email);
+        DataSet GetResidents(string emailFilter = "");
+    }
+
+    // Real resident service implementation
+    public class RealResidentService : IResidentService
+    {
+        private readonly string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30";
+        private readonly DPFunctions fn = DPFunctions.Instance;
+
+        public void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType)
+        {
+            using (SqlConnection connect = new SqlConnection(connectionString))
+            {
+                connect.Open();
+
+                // Check if email already exists
+                string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @Email";
+                using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, connect))
+                {
+                    checkCmd.Parameters.AddWithValue("@Email", email);
+                    if ((int)checkCmd.ExecuteScalar() > 0)
+                    {
+                        throw new Exception("The email address is already in use.");
+                    }
+                }
+
+                // Insert resident details
+                string query = "INSERT INTO Residents (Email, Name, ContactInfo, Gender, CheckInDate, CheckOutDate, BoardingType) " +
+                             "VALUES (@Email, @Name, @ContactInfo, @Gender, @CheckInDate, @CheckOutDate, @BoardingType)";
+                using (SqlCommand cmd = new SqlCommand(query, connect))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@ContactInfo", contactInfo);
+                    cmd.Parameters.AddWithValue("@Gender", gender);
+                    cmd.Parameters.AddWithValue("@CheckInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@CheckOutDate", checkOutDate.HasValue ? (object)checkOutDate.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@BoardingType", boardingType);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Check if new email exists (if changed)
+                if (oldEmail != newEmail)
+                {
+                    string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @NewEmail AND Email != @OldEmail";
+                    using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@NewEmail", newEmail);
+                        checkCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                        if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
+                        {
+                            throw new Exception("The new email is already in use by another resident.");
+                        }
+                    }
+                }
+
+                // Check room availability if room is specified
+                if (roomId.HasValue)
+                {
+                    string checkRoomQuery = "SELECT COUNT(*) FROM Residents WHERE RoomID = @RoomID AND Email != @OldEmail";
+                    using (SqlCommand checkRoomCmd = new SqlCommand(checkRoomQuery, conn))
+                    {
+                        checkRoomCmd.Parameters.AddWithValue("@RoomID", roomId.Value);
+                        checkRoomCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                        if (Convert.ToInt32(checkRoomCmd.ExecuteScalar()) > 0)
+                        {
+                            throw new Exception("The selected room is already assigned to another resident.");
+                        }
+                    }
+                }
+
+                // Update resident
+                string updateQuery = @"UPDATE Residents 
+                                     SET Name = @Name, 
+                                         ContactInfo = @ContactInfo, 
+                                         CheckInDate = @CheckInDate,
+                                         CheckOutDate = @CheckOutDate, 
+                                         BoardingType = @BoardingType, 
+                                         RoomID = @RoomID,
+                                         Email = @NewEmail 
+                                     WHERE Email = @OldEmail";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                    cmd.Parameters.AddWithValue("@NewEmail", newEmail);
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@ContactInfo", contactInfo);
+                    cmd.Parameters.AddWithValue("@CheckInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@CheckOutDate", (object)checkOutDate ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@BoardingType", boardingType);
+                    cmd.Parameters.AddWithValue("@RoomID", (object)roomId ?? DBNull.Value);
+
+                    if (cmd.ExecuteNonQuery() == 0)
+                    {
+                        throw new Exception("No resident found with the specified email.");
+                    }
+                }
+            }
+        }
+
+        public void DeleteResident(string email)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Delete related records in Income table
+                        string deleteIncomeQuery = "DELETE FROM Income WHERE ResidentEmail = @Email";
+                        using (SqlCommand cmdIncome = new SqlCommand(deleteIncomeQuery, connection, transaction))
+                        {
+                            cmdIncome.Parameters.AddWithValue("@Email", email);
+                            cmdIncome.ExecuteNonQuery();
+                        }
+
+                        // Delete related records in Rooms table
+                        string deleteRoomsQuery = "DELETE FROM Rooms WHERE Email = @Email";
+                        using (SqlCommand cmdRooms = new SqlCommand(deleteRoomsQuery, connection, transaction))
+                        {
+                            cmdRooms.Parameters.AddWithValue("@Email", email);
+                            cmdRooms.ExecuteNonQuery();
+                        }
+
+                        // Delete resident
+                        string deleteResidentQuery = "DELETE FROM Residents WHERE Email = @Email";
+                        using (SqlCommand cmdResident = new SqlCommand(deleteResidentQuery, connection, transaction))
+                        {
+                            cmdResident.Parameters.AddWithValue("@Email", email);
+                            if (cmdResident.ExecuteNonQuery() == 0)
+                            {
+                                throw new Exception("No resident found with the specified email.");
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public DataSet GetResidents(string emailFilter = "")
+        {
+            string query = string.IsNullOrEmpty(emailFilter)
+                ? "SELECT * FROM Residents"
+                : $"SELECT * FROM Residents WHERE Email LIKE '{emailFilter}%'";
+            return fn.getData(query);
+        }
+    }
+
+    // Proxy class for resident service
+    public class ResidentServiceProxy : IResidentService
+    {
+        private readonly RealResidentService _realService;
+        private readonly HashSet<string> _validBoardingTypes = new HashSet<string> { "Full Board", "Half Board", "Bed and Breakfast" };
+
+        public ResidentServiceProxy()
+        {
+            _realService = new RealResidentService();
+        }
+
+        public void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType)
+        {
+            // Validate inputs
+            ValidateResidentData(name, contactInfo, gender, email, boardingType);
+
+            _realService.AddResident(name, contactInfo, gender, email, checkInDate, checkOutDate, boardingType);
+        }
+
+        public void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId)
+        {
+            // Validate inputs
+            if (string.IsNullOrEmpty(oldEmail))
+                throw new ArgumentException("Old email cannot be empty.");
+            ValidateResidentData(name, contactInfo, null, newEmail, boardingType);
+
+            _realService.UpdateResident(oldEmail, newEmail, name, contactInfo, checkInDate, checkOutDate, boardingType, roomId);
+        }
+
+        public void DeleteResident(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentException("Email cannot be empty.");
+
+            _realService.DeleteResident(email);
+        }
+
+        public DataSet GetResidents(string emailFilter = "")
+        {
+            return _realService.GetResidents(emailFilter);
+        }
+
+        private void ValidateResidentData(string name, string contactInfo, string gender, string email, string boardingType)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be empty.");
+            if (string.IsNullOrEmpty(contactInfo))
+                throw new ArgumentException("Contact information cannot be empty.");
+            if (gender != null && string.IsNullOrEmpty(gender))
+                throw new ArgumentException("Gender cannot be empty.");
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentException("Email cannot be empty.");
+            if (!_validBoardingTypes.Contains(boardingType))
+                throw new ArgumentException("Invalid boarding type. Valid types are: Full Board, Half Board, Bed and Breakfast");
+        }
+    }
+
+    
     }
 }
+*/
 
 
 
+
+using Guna.UI2.WinForms;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace HotelManagementSystem1.AllUserControls_Resptions
+{
+    public partial class UC_ManageResidents : UserControl
+    {
+        private readonly IResidentService _residentService;
+        private DPFunctions fn = DPFunctions.Instance;
+
+        public UC_ManageResidents()
+        {
+            InitializeComponent();
+            _residentService = new ResidentServiceProxy();
+        }
+
+
+        public void Setres(DataGridView dg)
+        {
+            dg.DataSource = _residentService.GetResidents().Tables[0];
+            //disable resizing of header row
+            dg.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+
+            // Add a margin or padding to allow the header to show
+            if (dg is Guna.UI2.WinForms.Guna2DataGridView guna2DataGridView)
+            {
+                guna2DataGridView.Location = new Point(guna2DataGridView.Location.X, guna2DataGridView.Location.Y + 25);
+                guna2DataGridView.RowHeadersVisible = false;
+                guna2DataGridView.ColumnHeadersHeight = 25;
+                guna2DataGridView.Padding = new Padding(0, 20, 0, 0);
+
+                // Visual adjustments for Guna2DataGridView
+                guna2DataGridView.BackgroundColor = Color.White;
+                guna2DataGridView.GridColor = Color.LightGray;
+                guna2DataGridView.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+                guna2DataGridView.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+                guna2DataGridView.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+                guna2DataGridView.EnableHeadersVisualStyles = false; // important to use custom styles
+            }
+            else
+            {
+                dg.Location = new Point(dg.Location.X, dg.Location.Y + 25);
+                dg.RowHeadersVisible = false;
+                dg.ColumnHeadersHeight = 25;
+                dg.Padding = new Padding(0, 20, 0, 0);
+                // Visual adjustments for regular DataGridView
+                dg.BackgroundColor = Color.White;
+                dg.GridColor = Color.LightGray;
+                dg.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+                dg.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+                dg.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+                dg.EnableHeadersVisualStyles = false; // important to use custom styles
+
+            }
+        }
+
+        private void RefreshDataGridView()
+        {
+            try
+            {
+                guna2DataGridView1.DataSource = _residentService.GetResidents().Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error refreshing DataGridView: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnAddW_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _residentService.AddResident(
+                    txtNameResident.Text,
+                    txtMobileRes.Text,
+                    txtGenderRes.Text,
+                    txtEmailIdres.Text,
+                    txtcheckinRes.Value,
+                    txtCheckoutRes.Value,
+                    txtBoardingRes.Text
+                );
+
+                MessageBox.Show("Resident added successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                ClearAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2ButtonUPdateWorker_Click(object sender, EventArgs e)
+        {
+            if (guna2DataGridView1.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Please select a row in the table.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                string oldEmail = guna2DataGridView1.SelectedRows[0].Cells["Email"].Value.ToString();
+                int? roomId = null;
+                if (int.TryParse(guna2TextBoxRoomNo.Text, out int parsedRoomId))
+                {
+                    roomId = parsedRoomId;
+                }
+
+                _residentService.UpdateResident(
+                    oldEmail,
+                    guna2TextBoxEmailId.Text,
+                    guna2TextBoxName.Text,
+                    guna2TextBoxMobileNo.Text,
+                    guna2DateTimePickercheckin.Value,
+                    guna2DateTimePickercheckout.Value,
+                    guna2ComboBoxboarding.Text,
+                    roomId
+                );
+
+                MessageBox.Show("Record updated successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                RefreshDataGridView();
+                ClearAll();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (guna2DataGridView1.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    DataGridViewRow row = guna2DataGridView1.Rows[e.RowIndex];
+
+                    guna2TextBoxEmailId.Text = row.Cells["Email"].Value?.ToString();
+                    guna2TextBoxName.Text = row.Cells["Name"].Value?.ToString();
+                    guna2TextBoxMobileNo.Text = row.Cells["ContactInfo"].Value?.ToString();
+                    guna2DateTimePickercheckin.Value = Convert.ToDateTime(row.Cells["CheckInDate"].Value);
+                  
+
+                    if (row.Cells["CheckOutDate"].Value != DBNull.Value && row.Cells["CheckOutDate"].Value != null)
+                    {
+                        guna2DateTimePickercheckout.Value = Convert.ToDateTime(row.Cells["CheckOutDate"].Value);
+                    }
+                    else
+                    {
+                        guna2DateTimePickercheckout.Value = DateTime.Now;
+                    }
+
+                    guna2ComboBoxboarding.Text = row.Cells["BoardingType"].Value?.ToString();
+
+                    if (row.Cells["RoomID"].Value != DBNull.Value && row.Cells["RoomID"].Value != null)
+                    {
+                        guna2TextBoxRoomNo.Text = row.Cells["RoomID"].Value?.ToString();
+                    }
+                    else
+                    {
+                        guna2TextBoxRoomNo.Text = "";
+                    }
+                    guna2TextBoxemailres.Text = row.Cells["Email"].Value.ToString();
+                }
+            }
+        }
+
+        private void guna2TextBox1_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                guna2DataGridView1.DataSource = _residentService.GetResidents(guna2TextBoxemailres.Text).Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void tabControl1_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            if (tabControl1.SelectedIndex == 1)
+            {
+                Setres(guna2DataGridView1);
+            }
+            else if (tabControl1.SelectedIndex == 2)
+            {
+                Setres(guna2DataGridView2res);
+            }
+        }
+
+        private void guna2ComboBoxboarding_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // Event handler for boarding type selection
+        }
+
+        private void txtEmailW_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                guna2DataGridView2res.DataSource = _residentService.GetResidents(txtEmailres.Text).Tables[0];
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtEmailres.Text))
+            {
+                MessageBox.Show("Please enter a valid email address.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are You Sure?", "Confirmation...", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+            {
+                try
+                {
+                    _residentService.DeleteResident(txtEmailres.Text);
+                    MessageBox.Show("Record Deleted.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    tabControl1_SelectedIndexChanged_1(this, null);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void guna2DataGridView2res_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (guna2DataGridView2res.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    DataGridViewRow row = guna2DataGridView2res.Rows[e.RowIndex];
+                    txtEmailres.Text = row.Cells["Email"].Value.ToString();
+                }
+            }
+        }
+
+        private void UC_ManageResidents_Load(object sender, EventArgs e)
+        {
+            // Initialize any required data or UI elements when the control loads
+        }
+
+        public void ClearAll()
+        {
+            txtNameResident.Clear();
+            txtMobileRes.Clear();
+            txtBoardingRes.SelectedIndex = -1;
+            txtGenderRes.SelectedIndex = -1;
+            txtEmailIdres.Clear();
+            guna2TextBoxName.Clear();
+            guna2TextBoxRoomNo.Clear();
+            guna2TextBoxEmailId.Clear();
+            guna2TextBoxMobileNo.Clear();
+        }
+
+        private void UC_ManageResidents_Leave(object sender, EventArgs e)
+        {
+            ClearAll();
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+            // Event handler for label click
+        }
+
+        private void guna2DateTimePicker1_ValueChanged(object sender, EventArgs e)
+        {
+            // Event handler for date time picker value change
+        }
+
+
+        // Interface defining resident management operations
+        public interface IResidentService
+    {
+        void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType);
+        void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId);
+        void DeleteResident(string email);
+        DataSet GetResidents(string emailFilter = "");
+    }
+
+    // Real resident service implementation
+    public class RealResidentService : IResidentService
+    {
+        private readonly string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30";
+        private readonly DPFunctions fn = DPFunctions.Instance;
+
+        public void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType)
+        {
+            using (SqlConnection connect = new SqlConnection(connectionString))
+            {
+                connect.Open();
+
+                // Check if email already exists
+                string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @Email";
+                using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, connect))
+                {
+                    checkCmd.Parameters.AddWithValue("@Email", email);
+                    if ((int)checkCmd.ExecuteScalar() > 0)
+                    {
+                        throw new Exception("The email address is already in use.");
+                    }
+                }
+
+                // Insert resident details
+                string query = "INSERT INTO Residents (Email, Name, ContactInfo, Gender, CheckInDate, CheckOutDate, BoardingType) " +
+                             "VALUES (@Email, @Name, @ContactInfo, @Gender, @CheckInDate, @CheckOutDate, @BoardingType)";
+                using (SqlCommand cmd = new SqlCommand(query, connect))
+                {
+                    cmd.Parameters.AddWithValue("@Email", email);
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@ContactInfo", contactInfo);
+                    cmd.Parameters.AddWithValue("@Gender", gender);
+                    cmd.Parameters.AddWithValue("@CheckInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@CheckOutDate", checkOutDate.HasValue ? (object)checkOutDate.Value : DBNull.Value);
+                    cmd.Parameters.AddWithValue("@BoardingType", boardingType);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+        public void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                conn.Open();
+
+                // Check if new email exists (if changed)
+                if (oldEmail != newEmail)
+                {
+                    string checkEmailQuery = "SELECT COUNT(*) FROM Residents WHERE Email = @NewEmail AND Email != @OldEmail";
+                    using (SqlCommand checkCmd = new SqlCommand(checkEmailQuery, conn))
+                    {
+                        checkCmd.Parameters.AddWithValue("@NewEmail", newEmail);
+                        checkCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                        if (Convert.ToInt32(checkCmd.ExecuteScalar()) > 0)
+                        {
+                            throw new Exception("The new email is already in use by another resident.");
+                        }
+                    }
+                }
+
+                // Check room availability if room is specified
+                if (roomId.HasValue)
+                {
+                    string checkRoomQuery = "SELECT COUNT(*) FROM Residents WHERE RoomID = @RoomID AND Email != @OldEmail";
+                    using (SqlCommand checkRoomCmd = new SqlCommand(checkRoomQuery, conn))
+                    {
+                        checkRoomCmd.Parameters.AddWithValue("@RoomID", roomId.Value);
+                        checkRoomCmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                        if (Convert.ToInt32(checkRoomCmd.ExecuteScalar()) > 0)
+                        {
+                            throw new Exception("The selected room is already assigned to another resident.");
+                        }
+                    }
+                }
+
+                // Update resident
+                string updateQuery = @"UPDATE Residents 
+                                     SET Name = @Name, 
+                                         ContactInfo = @ContactInfo, 
+                                         CheckInDate = @CheckInDate,
+                                         CheckOutDate = @CheckOutDate, 
+                                         BoardingType = @BoardingType, 
+                                         RoomID = @RoomID,
+                                         Email = @NewEmail 
+                                     WHERE Email = @OldEmail";
+
+                using (SqlCommand cmd = new SqlCommand(updateQuery, conn))
+                {
+                    cmd.Parameters.AddWithValue("@OldEmail", oldEmail);
+                    cmd.Parameters.AddWithValue("@NewEmail", newEmail);
+                    cmd.Parameters.AddWithValue("@Name", name);
+                    cmd.Parameters.AddWithValue("@ContactInfo", contactInfo);
+                    cmd.Parameters.AddWithValue("@CheckInDate", checkInDate);
+                    cmd.Parameters.AddWithValue("@CheckOutDate", (object)checkOutDate ?? DBNull.Value);
+                    cmd.Parameters.AddWithValue("@BoardingType", boardingType);
+                    cmd.Parameters.AddWithValue("@RoomID", (object)roomId ?? DBNull.Value);
+
+                    if (cmd.ExecuteNonQuery() == 0)
+                    {
+                        throw new Exception("No resident found with the specified email.");
+                    }
+                }
+            }
+        }
+
+        public void DeleteResident(string email)
+        {
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                using (SqlTransaction transaction = connection.BeginTransaction())
+                {
+                    try
+                    {
+                        // Delete related records in Income table
+                        string deleteIncomeQuery = "DELETE FROM Income WHERE ResidentEmail = @Email";
+                        using (SqlCommand cmdIncome = new SqlCommand(deleteIncomeQuery, connection, transaction))
+                        {
+                            cmdIncome.Parameters.AddWithValue("@Email", email);
+                            cmdIncome.ExecuteNonQuery();
+                        }
+
+                        // Delete related records in Rooms table
+                        string deleteRoomsQuery = "DELETE FROM Rooms WHERE Email = @Email";
+                        using (SqlCommand cmdRooms = new SqlCommand(deleteRoomsQuery, connection, transaction))
+                        {
+                            cmdRooms.Parameters.AddWithValue("@Email", email);
+                            cmdRooms.ExecuteNonQuery();
+                        }
+
+                        // Delete resident
+                        string deleteResidentQuery = "DELETE FROM Residents WHERE Email = @Email";
+                        using (SqlCommand cmdResident = new SqlCommand(deleteResidentQuery, connection, transaction))
+                        {
+                            cmdResident.Parameters.AddWithValue("@Email", email);
+                            if (cmdResident.ExecuteNonQuery() == 0)
+                            {
+                                throw new Exception("No resident found with the specified email.");
+                            }
+                        }
+
+                        transaction.Commit();
+                    }
+                    catch
+                    {
+                        transaction.Rollback();
+                        throw;
+                    }
+                }
+            }
+        }
+
+        public DataSet GetResidents(string emailFilter = "")
+        {
+            string query = string.IsNullOrEmpty(emailFilter)
+                ? "SELECT * FROM Residents"
+                : $"SELECT * FROM Residents WHERE Email LIKE '{emailFilter}%'";
+            return fn.getData(query);
+        }
+    }
+
+    // Proxy class for resident service
+    public class ResidentServiceProxy : IResidentService
+    {
+        private readonly RealResidentService _realService;
+        private readonly HashSet<string> _validBoardingTypes = new HashSet<string> { "Full Board", "Half Board", "Bed and Breakfast" };
+
+        public ResidentServiceProxy()
+        {
+            _realService = new RealResidentService();
+        }
+
+        public void AddResident(string name, string contactInfo, string gender, string email, DateTime checkInDate, DateTime? checkOutDate, string boardingType)
+        {
+            // Validate inputs
+            ValidateResidentData(name, contactInfo, gender, email, boardingType);
+
+            _realService.AddResident(name, contactInfo, gender, email, checkInDate, checkOutDate, boardingType);
+        }
+
+        public void UpdateResident(string oldEmail, string newEmail, string name, string contactInfo, DateTime checkInDate, DateTime? checkOutDate, string boardingType, int? roomId)
+        {
+            // Validate inputs
+            if (string.IsNullOrEmpty(oldEmail))
+                throw new ArgumentException("Old email cannot be empty.");
+            ValidateResidentData(name, contactInfo, null, newEmail, boardingType);
+
+            _realService.UpdateResident(oldEmail, newEmail, name, contactInfo, checkInDate, checkOutDate, boardingType, roomId);
+        }
+
+        public void DeleteResident(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentException("Email cannot be empty.");
+
+            _realService.DeleteResident(email);
+        }
+
+        public DataSet GetResidents(string emailFilter = "")
+        {
+            return _realService.GetResidents(emailFilter);
+        }
+
+        private void ValidateResidentData(string name, string contactInfo, string gender, string email, string boardingType)
+        {
+            if (string.IsNullOrEmpty(name))
+                throw new ArgumentException("Name cannot be empty.");
+            if (string.IsNullOrEmpty(contactInfo))
+                throw new ArgumentException("Contact information cannot be empty.");
+            if (gender != null && string.IsNullOrEmpty(gender))
+                throw new ArgumentException("Gender cannot be empty.");
+            if (string.IsNullOrEmpty(email))
+                throw new ArgumentException("Email cannot be empty.");
+            if (!_validBoardingTypes.Contains(boardingType))
+                throw new ArgumentException("Invalid boarding type. Valid types are: Full Board, Half Board, Bed and Breakfast");
+        }
+    }
+
+   
+    }
+}

@@ -1,4 +1,5 @@
-﻿using Guna.UI2.WinForms;
+﻿/*using Guna.UI2.WinForms;
+using HotelManagementSystem1.Repositories;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,13 +10,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+
 
 namespace HotelManagementSystem1.AllUserControls_Resptions
 {
     public partial class UC_ResCHECKOUT : UserControl
     {
-       DPFunctions fn = DPFunctions.Instance;
-       // private readonly DPFunctions fn;
+      
+        private readonly ResidentRepository _residentRepository = new ResidentRepository();
+        private readonly RoomRepository _roomRepository = new RoomRepository();
+
         public UC_ResCHECKOUT()
         {
             InitializeComponent();
@@ -30,20 +35,15 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
                 // Check if the textbox is empty
                 if (string.IsNullOrEmpty(txtemailres.Text))
                 {
-                    // Query to fetch all workers when the TextBox is empty
                     query = "SELECT * FROM Residents";
                 }
                 else
                 {
-                    // Query to filter workers based on entered email
                     query = "SELECT * FROM Residents WHERE Email LIKE '" + txtemailres.Text + "%'";
                 }
 
-                // Fetch data using the existing method
-                DataSet ds = fn.getData(query);
-
-                // Bind the result to the DataGridView
-                guna2DataGridViewrescheckout.DataSource = ds.Tables[0];
+                DataTable dataTable = _residentRepository.GetResidents(query);
+                guna2DataGridViewrescheckout.DataSource = dataTable;
             }
             catch (Exception ex)
             {
@@ -57,12 +57,10 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             {
                 if (guna2DataGridViewrescheckout.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
                 {
-                    // Fetch the row where the click occurred
                     DataGridViewRow row = guna2DataGridViewrescheckout.Rows[e.RowIndex];
 
-                    // Populate TextBoxes with respective column values
-                    guna2TextBoxidmail.Text = row.Cells["Email"].Value?.ToString();       // Email column
-                    txtcnamerescheck.Text = row.Cells["Name"].Value?.ToString();          // Name column
+                    guna2TextBoxidmail.Text = row.Cells["Email"].Value?.ToString();
+                    txtcnamerescheck.Text = row.Cells["Name"].Value?.ToString();
 
                     if (row.Cells["CheckOutDate"].Value != DBNull.Value && row.Cells["CheckOutDate"].Value != null)
                     {
@@ -70,132 +68,277 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
                     }
                     else
                     {
-                        txtDateCheckOut.Value = DateTime.Now; // Default to today's date if null
+                        txtDateCheckOut.Value = DateTime.Now;
                     }
 
                     if (row.Cells["RoomID"].Value != DBNull.Value && row.Cells["RoomID"].Value != null)
                     {
                         txtcromnum.Text = row.Cells["RoomID"].Value?.ToString();
 
-                        // Fetch PricePerNight from the Rooms table based on RoomID
                         int roomId = Convert.ToInt32(row.Cells["RoomID"].Value);
-                        decimal pricePerNight = GetPricePerNight(roomId); // Method to fetch price per night
+                        decimal pricePerNight = _roomRepository.GetRoomPrice(roomId.ToString());
 
                         if (row.Cells["CheckInDate"].Value != DBNull.Value && row.Cells["CheckInDate"].Value != null)
                         {
                             DateTime checkInDate = Convert.ToDateTime(row.Cells["CheckInDate"].Value);
                             DateTime checkOutDate = txtDateCheckOut.Value;
 
-                            // Calculate total days
                             int totalDays = (checkOutDate - checkInDate).Days;
-                            if (totalDays < 0) totalDays = 0; // Ensure no negative days
+                            if (totalDays < 0) totalDays = 0;
 
-                            // Calculate total price
                             decimal totalPrice = totalDays * pricePerNight;
-                            txtPriceofchecout.Text = totalPrice.ToString("C"); // Display as currency
+                            txtPriceofchecout.Text = totalPrice.ToString("C");
                         }
                         else
                         {
-                            txtPriceofchecout.Text = "0"; // Default to 0 if CheckInDate is null
+                            txtPriceofchecout.Text = "0";
                         }
                     }
                     else
                     {
-                        txtcromnum.Text = ""; // RoomID is empty
-                        txtPriceofchecout.Text = "0";  // Default total price to 0
+                        txtcromnum.Text = "";
+                        txtPriceofchecout.Text = "0";
                     }
                 }
             }
         }
-
-
-        private decimal GetPricePerNight(int roomId)
-        {
-            decimal pricePerNight = 0;
-
-            // Update the connection string as needed
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30";
-
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                string query = "SELECT PricePerNight FROM Rooms WHERE RoomID = @RoomID";
-                using (SqlCommand cmd = new SqlCommand(query, connection))
-                {
-                    cmd.Parameters.AddWithValue("@RoomID", roomId);
-                    connection.Open();
-
-                    object result = cmd.ExecuteScalar();
-                    if (result != null && result != DBNull.Value)
-                    {
-                        pricePerNight = Convert.ToDecimal(result);
-                    }
-                }
-            }
-
-            return pricePerNight;
-        }
-
 
         private void UC_ResCHECKOUT_Load(object sender, EventArgs e)
         {
-            String query = "select * from Residents";
-            DataSet ds = fn.getData(query);
-            guna2DataGridViewrescheckout.DataSource = ds.Tables[0];
+            DataTable dataTable = _residentRepository.GetAllResidents();
+            guna2DataGridViewrescheckout.DataSource = dataTable;
         }
+
         public void clearAll()
         {
             txtcnamerescheck.Clear();
             txtcromnum.Clear();
             txtPriceofchecout.Clear();
             guna2TextBoxidmail.Clear();
-          
         }
 
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-            if (txtcnamerescheck.Text != "") // Check if a customer is selected
+           
+            if (!string.IsNullOrEmpty(txtcnamerescheck.Text))
             {
                 if (MessageBox.Show("Are You Sure?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
                     try
                     {
-                        string checkoutDate = txtDateCheckOut.Text;
-                        int roomId = string.IsNullOrEmpty(txtcromnum.Text) ? 0 : Convert.ToInt32(txtcromnum.Text);
+                       // string checkoutDate = txtDateCheckOut.Text;
+                        string roomId = txtcromnum.Text;
+                        string Email = guna2TextBoxidmail.Text;
 
-                        // Update the Residents and Rooms tables
-                        string query = @"
-                    UPDATE Residents 
-                    SET CheckOutDate = @CheckOutDate 
-                    WHERE Email = @Email;
+                        DateTime checkoutDate = DateTime.Parse(txtDateCheckOut.Text);
+                        _residentRepository.UpdateCheckoutDate(guna2TextBoxidmail.Text, checkoutDate);
+                        _roomRepository.MarkRoomAsAvailable(roomId); 
+                        _roomRepository.EmpytRoomID(Email);
 
-                    UPDATE Rooms 
-                    SET Status = 'Available', 
-                        Email = NULL 
-                    WHERE RoomID = @RoomID;
-                ";
+                        MessageBox.Show("Check Out Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                     
+                        UC_ResCHECKOUT_Load(this, null);
+                      
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("No Customer Selected.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
 
-                        using (SqlConnection conn = new SqlConnection(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=E:\LoginData.mdf;Integrated Security=True;Connect Timeout=30"))
+        private void UC_ResCHECKOUT_Leave(object sender, EventArgs e)
+        {
+            clearAll();
+        }
+
+        private void txtPriceofchecout_TextChanged(object sender, EventArgs e)
+        {
+            txtPriceofchecout.ReadOnly = true;
+        }
+    }
+}
+*/
+
+
+using Guna.UI2.WinForms;
+using HotelManagementSystem1.Repositories;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Data.SqlClient;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
+
+namespace HotelManagementSystem1.AllUserControls_Resptions
+{
+    public partial class UC_ResCHECKOUT : UserControl
+    {
+
+        private readonly ResidentRepository _residentRepository = new ResidentRepository();
+        private readonly RoomRepository _roomRepository = new RoomRepository();
+
+        public UC_ResCHECKOUT()
+        {
+            InitializeComponent();
+        }
+
+        private void txtName_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string query;
+
+                // Check if the textbox is empty
+                if (string.IsNullOrEmpty(txtemailres.Text))
+                {
+                    query = "SELECT * FROM Residents";
+                }
+                else
+                {
+                    query = "SELECT * FROM Residents WHERE Email LIKE '" + txtemailres.Text + "%'";
+                }
+
+                DataTable dataTable = _residentRepository.GetResidents(query);
+                guna2DataGridViewrescheckout.DataSource = dataTable;
+
+                //disable resizing of header row
+                guna2DataGridViewrescheckout.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+                // Add a margin or padding to allow the header to show
+                guna2DataGridViewrescheckout.RowHeadersVisible = false;
+                guna2DataGridViewrescheckout.ColumnHeadersHeight = 25;
+                guna2DataGridViewrescheckout.Padding = new Padding(0, 25, 0, 0); // Adjust padding
+
+
+                // Visual adjustments for Guna2DataGridView
+                guna2DataGridViewrescheckout.BackgroundColor = Color.White;
+                guna2DataGridViewrescheckout.GridColor = Color.LightGray;
+                guna2DataGridViewrescheckout.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+                guna2DataGridViewrescheckout.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+                guna2DataGridViewrescheckout.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+                guna2DataGridViewrescheckout.EnableHeadersVisualStyles = false; // important to use custom styles
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void guna2DataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0 && e.ColumnIndex >= 0)
+            {
+                if (guna2DataGridViewrescheckout.Rows[e.RowIndex].Cells[e.ColumnIndex].Value != null)
+                {
+                    DataGridViewRow row = guna2DataGridViewrescheckout.Rows[e.RowIndex];
+
+                    guna2TextBoxidmail.Text = row.Cells["Email"].Value?.ToString();
+                    txtcnamerescheck.Text = row.Cells["Name"].Value?.ToString();
+
+                    if (row.Cells["CheckOutDate"].Value != DBNull.Value && row.Cells["CheckOutDate"].Value != null)
+                    {
+                        txtDateCheckOut.Value = Convert.ToDateTime(row.Cells["CheckOutDate"].Value);
+                    }
+                    else
+                    {
+                        txtDateCheckOut.Value = DateTime.Now;
+                    }
+
+                    if (row.Cells["RoomID"].Value != DBNull.Value && row.Cells["RoomID"].Value != null)
+                    {
+                        txtcromnum.Text = row.Cells["RoomID"].Value?.ToString();
+
+                        int roomId = Convert.ToInt32(row.Cells["RoomID"].Value);
+                        decimal pricePerNight = _roomRepository.GetRoomPrice(roomId.ToString());
+
+                        if (row.Cells["CheckInDate"].Value != DBNull.Value && row.Cells["CheckInDate"].Value != null)
                         {
-                            conn.Open();
+                            DateTime checkInDate = Convert.ToDateTime(row.Cells["CheckInDate"].Value);
+                            DateTime checkOutDate = txtDateCheckOut.Value;
 
-                            using (SqlCommand cmd = new SqlCommand(query, conn))
-                            {
-                                // Parameters for the Residents table
-                                cmd.Parameters.AddWithValue("@CheckOutDate", checkoutDate);
-                                cmd.Parameters.AddWithValue("@Email", guna2TextBoxidmail.Text);
+                            int totalDays = (checkOutDate - checkInDate).Days;
+                            if (totalDays < 0) totalDays = 0;
 
-                                // Parameters for the Rooms table
-                                cmd.Parameters.AddWithValue("@RoomID", roomId);
-
-                                cmd.ExecuteNonQuery();
-                            }
+                            decimal totalPrice = totalDays * pricePerNight;
+                            txtPriceofchecout.Text = totalPrice.ToString("C");
                         }
+                        else
+                        {
+                            txtPriceofchecout.Text = "0";
+                        }
+                    }
+                    else
+                    {
+                        txtcromnum.Text = "";
+                        txtPriceofchecout.Text = "0";
+                    }
+                    txtemailres.Text = row.Cells["Email"].Value.ToString();
+                }
+            }
+        }
+
+        private void UC_ResCHECKOUT_Load(object sender, EventArgs e)
+        {
+            DataTable dataTable = _residentRepository.GetAllResidents();
+            guna2DataGridViewrescheckout.DataSource = dataTable;
+
+            //disable resizing of header row
+            guna2DataGridViewrescheckout.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            // Add a margin or padding to allow the header to show
+            guna2DataGridViewrescheckout.RowHeadersVisible = false;
+            guna2DataGridViewrescheckout.ColumnHeadersHeight = 25;
+            guna2DataGridViewrescheckout.Padding = new Padding(0, 25, 0, 0); // Adjust padding
+
+            // Visual adjustments for Guna2DataGridView
+            guna2DataGridViewrescheckout.BackgroundColor = Color.White;
+            guna2DataGridViewrescheckout.GridColor = Color.LightGray;
+            guna2DataGridViewrescheckout.ColumnHeadersDefaultCellStyle.BackColor = Color.LightSteelBlue;
+            guna2DataGridViewrescheckout.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            guna2DataGridViewrescheckout.AlternatingRowsDefaultCellStyle.BackColor = Color.AliceBlue;
+            guna2DataGridViewrescheckout.EnableHeadersVisualStyles = false; // important to use custom styles
+        }
+
+        public void clearAll()
+        {
+            txtcnamerescheck.Clear();
+            txtcromnum.Clear();
+            txtPriceofchecout.Clear();
+            guna2TextBoxidmail.Clear();
+        }
+
+        private void btnCheckOut_Click(object sender, EventArgs e)
+        {
+
+            if (!string.IsNullOrEmpty(txtcnamerescheck.Text))
+            {
+                if (MessageBox.Show("Are You Sure?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                {
+                    try
+                    {
+                        // string checkoutDate = txtDateCheckOut.Text;
+                        string roomId = txtcromnum.Text;
+                        string Email = guna2TextBoxidmail.Text;
+
+                        DateTime checkoutDate = DateTime.Parse(txtDateCheckOut.Text);
+                        _residentRepository.UpdateCheckoutDate(guna2TextBoxidmail.Text, checkoutDate);
+                        _roomRepository.MarkRoomAsAvailable(roomId);
+                        _roomRepository.EmpytRoomID(Email);
 
                         MessageBox.Show("Check Out Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        // Refresh the data and clear all input fields
                         UC_ResCHECKOUT_Load(this, null);
-                      // clearAll();
+
                     }
                     catch (Exception ex)
                     {

@@ -22,7 +22,11 @@ E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSys
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls.UC_MonitoringRoom.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls.UC_ResidentInfo.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls.UC_TrackIncome.resources
+E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents.resources
+E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT.resources
+E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.Dashboard.resources
+E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.ForgetPass.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.Form1.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.ManagerForm.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.Properties.Resources.resources
@@ -34,6 +38,3 @@ E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelMan.BD4E0C24.
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.exe
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.pdb
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\bin\Debug\HotelManagementSystem1.pdb
-E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents.resources
-E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign.resources
-E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT.resources

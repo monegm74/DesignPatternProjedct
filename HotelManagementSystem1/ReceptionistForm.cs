@@ -1,4 +1,5 @@
 ﻿using HotelManagementSystem1.AllUserControls;
+using HotelManagementSystem1.AllUserControls_Resptions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -66,6 +67,7 @@ namespace HotelManagementSystem1
             uC_RoomAssign1.Visible = true;
             uC_RoomAssign1.BringToFront();
 
+
         }
 
         private void btnTrackIncome_Click(object sender, EventArgs e)
@@ -74,6 +76,17 @@ namespace HotelManagementSystem1
             uC_ResCHECKOUT1.Visible = true;
             uC_ResCHECKOUT1.BringToFront();
 
+
+        }
+
+        private void BTN_ROOMASS_Leave(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void btnCheckout_Leave(object sender, EventArgs e)
+        {
+    
         }
     }
 }
