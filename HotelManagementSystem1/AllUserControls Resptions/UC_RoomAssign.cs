@@ -196,7 +196,7 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
         private readonly RoomRepository _roomRepository;
         private readonly ResidentRepository _residentRepository;
-        DPFunctions fn = DPFunctions.Instance;
+        DBHelpers fn = DBHelpers.Instance;
 
         public UC_RoomAssign()
         {
@@ -218,14 +218,14 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
         {
             try
             {
-                if (DPFunctions.Instance == null)
+                if (DBHelpers.Instance == null)
                 {
                     MessageBox.Show("DPFunctions.Instance is null. Ensure the singleton is correctly initialized.");
                     return;
                 }
 
                 String query = "SELECT * FROM Rooms";
-                DataSet ds = DPFunctions.Instance.getData(query);
+                DataSet ds = DBHelpers.Instance.getData(query);
 
                 if (ds == null || ds.Tables.Count == 0)
                 {

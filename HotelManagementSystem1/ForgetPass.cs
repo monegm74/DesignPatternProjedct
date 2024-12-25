@@ -121,5 +121,28 @@ namespace HotelManagementSystem1
                 return builder.ToString();
             }
         }
+
+        private void Login_showpass_CheckedChanged(object sender, EventArgs e)
+        {
+            if (Forget_showpass.Checked)
+            {
+                // Show password  
+                guna2TextBox1.PasswordChar = '\0'; // or just "" to make it visible  
+                guna2TextBox2.PasswordChar = '\0';
+            }
+            else
+            {
+                // Hide password  
+                guna2TextBox1.PasswordChar = '*'; // or your preferred mask character  
+                guna2TextBox2.PasswordChar = '*'; // or your preferred mask character  
+            }
+        }
+
+        private void SignUP_loginhere_Click(object sender, EventArgs e)
+        {
+            Form1 FormI1 = new Form1();
+            FormI1.Show();
+            this.Hide();
+        }
     }
 }

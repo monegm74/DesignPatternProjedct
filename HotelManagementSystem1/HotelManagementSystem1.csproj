@@ -94,12 +94,6 @@
     <Compile Include="AllUserControls Resptions\UC_RoomAssign.Designer.cs">
       <DependentUpon>UC_RoomAssign.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dashboard.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Dashboard.Designer.cs">
-      <DependentUpon>Dashboard.cs</DependentUpon>
-    </Compile>
     <Compile Include="ForgetPass.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,7 +106,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="AllClassesPatterns\DPFunctions.cs" />
+    <Compile Include="AllClassesPatterns\DBHelpers.cs" />
     <Compile Include="ManagerForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -155,9 +149,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="AllUserControls Resptions\UC_RoomAssign.resx">
       <DependentUpon>UC_RoomAssign.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Dashboard.resx">
-      <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ForgetPass.resx">
       <DependentUpon>ForgetPass.cs</DependentUpon>

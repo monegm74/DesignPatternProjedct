@@ -94,7 +94,7 @@ namespace HotelManagementSystem1
                                         DataTable managerTable = new DataTable();
                                         managerAdapter.Fill(managerTable);
 
-                                        if (managerTable.Rows.Count >= 1)
+                                        if (managerTable.Rows.Count >=2)
                                         {
                                             MessageBox.Show("A Manager already exists. Only one Manager can be registered.", "Error Message", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                             return;
@@ -189,6 +189,11 @@ namespace HotelManagementSystem1
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void SignUP_Pass_TextChanged(object sender, EventArgs e)
         {
 
         }

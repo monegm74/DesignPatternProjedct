@@ -167,6 +167,7 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
 
 
 using Guna.UI2.WinForms;
+using HotelManagementSystem1.AllUserControls;
 using HotelManagementSystem1.Repositories;
 using System;
 using System.Collections.Generic;
@@ -174,6 +175,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -271,7 +273,8 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
                             if (totalDays < 0) totalDays = 0;
 
                             decimal totalPrice = totalDays * pricePerNight;
-                            txtPriceofchecout.Text = totalPrice.ToString("C");
+                            //txtPriceofchecout.Text = totalPrice.ToString("C");
+                            txtPriceofchecout.Text = totalPrice.ToString("F2");
                         }
                         else
                         {
@@ -317,28 +320,85 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             guna2TextBoxidmail.Clear();
         }
 
+
+        // Method to insert income into the database
+
+
+
+
+
+        /*        private void btnCheckOut_Click(object sender, EventArgs e)
+                {
+
+                    if (!string.IsNullOrEmpty(txtcnamerescheck.Text))
+                    {
+                        if (MessageBox.Show("Are You Sure?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
+                        {
+                            try
+                            {
+                                // string checkoutDate = txtDateCheckOut.Text;
+                                string roomId = txtcromnum.Text;
+                                string Email = guna2TextBoxidmail.Text;
+
+
+                                DateTime checkoutDate = DateTime.Parse(txtDateCheckOut.Text);
+                                _residentRepository.UpdateCheckoutDate(guna2TextBoxidmail.Text, checkoutDate);
+                                _roomRepository.MarkRoomAsAvailable(roomId);
+                                _roomRepository.EmpytRoomID(Email);
+
+                                MessageBox.Show("Check Out Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                                UC_ResCHECKOUT_Load(this, null);
+
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No Customer Selected.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }*/
+
         private void btnCheckOut_Click(object sender, EventArgs e)
         {
-
             if (!string.IsNullOrEmpty(txtcnamerescheck.Text))
             {
                 if (MessageBox.Show("Are You Sure?", "Confirmation", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning) == DialogResult.OK)
                 {
                     try
                     {
-                        // string checkoutDate = txtDateCheckOut.Text;
                         string roomId = txtcromnum.Text;
-                        string Email = guna2TextBoxidmail.Text;
+                        string email = guna2TextBoxidmail.Text;
 
+                        // Parse checkout date
                         DateTime checkoutDate = DateTime.Parse(txtDateCheckOut.Text);
-                        _residentRepository.UpdateCheckoutDate(guna2TextBoxidmail.Text, checkoutDate);
+
+                        // Parse the price of checkout from txtPriceofchecout
+                        string priceText = txtPriceofchecout.Text.Replace(CultureInfo.CurrentCulture.NumberFormat.CurrencySymbol, "").Trim();
+                        if (!decimal.TryParse(priceText, NumberStyles.Currency, CultureInfo.CurrentCulture, out decimal price))
+                        {
+                            MessageBox.Show("Invalid price format. Please ensure the value is numeric.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            return;
+                        }
+
+                        // Update checkout date for resident
+                        _residentRepository.UpdateCheckoutDate(email, checkoutDate);
+
+                        // Update room availability
                         _roomRepository.MarkRoomAsAvailable(roomId);
-                        _roomRepository.EmpytRoomID(Email);
+                        _roomRepository.EmpytRoomID(email);
+
+                        // Insert income into the Income table
+                        InsertIncome(email, price, checkoutDate);
 
                         MessageBox.Show("Check Out Successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
+                        // Reload UI
                         UC_ResCHECKOUT_Load(this, null);
-
                     }
                     catch (Exception ex)
                     {
@@ -349,6 +409,23 @@ namespace HotelManagementSystem1.AllUserControls_Resptions
             else
             {
                 MessageBox.Show("No Customer Selected.", "Message", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+
+
+
+        public void InsertIncome(string residentEmail, decimal amount, DateTime date)
+        {
+            using (var connection = new SqlConnection("Data Source=(LocalDB)\\MSSQLLocalDB;AttachDbFilename=E:\\LoginData.mdf;Integrated Security=True;Connect Timeout=30;Encrypt=false"))
+            {
+                connection.Open();
+                var command = new SqlCommand("INSERT INTO Income (ResidentEmail, Amount, Date) VALUES (@Email, @Amount, @Date)", connection);
+                command.Parameters.AddWithValue("@Email", residentEmail);
+                command.Parameters.AddWithValue("@Amount", amount);
+                command.Parameters.AddWithValue("@Date", date);
+
+                command.ExecuteNonQuery(); // IncomeID will be auto-generated  
             }
         }
 

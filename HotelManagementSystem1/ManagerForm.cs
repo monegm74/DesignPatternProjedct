@@ -97,5 +97,10 @@ namespace HotelManagementSystem1
             uC_MonitoringRoom1.BringToFront();
 
         }
+
+        private void uC_ResidentInfo1_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

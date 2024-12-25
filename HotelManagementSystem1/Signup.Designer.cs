@@ -209,6 +209,7 @@
             this.SignUP_Pass.Size = new System.Drawing.Size(729, 84);
             this.SignUP_Pass.TabIndex = 22;
             this.SignUP_Pass.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.SignUP_Pass.TextChanged += new System.EventHandler(this.SignUP_Pass_TextChanged);
             // 
             // label8
             // 

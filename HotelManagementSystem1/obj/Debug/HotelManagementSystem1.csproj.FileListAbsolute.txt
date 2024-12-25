@@ -25,7 +25,6 @@ E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSys
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign.resources
-E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.Dashboard.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.ForgetPass.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.Form1.resources
 E:\Dp\HotelManagementSystem1\HotelManagementSystem1\obj\Debug\HotelManagementSystem1.ManagerForm.resources

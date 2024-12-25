@@ -118,7 +118,7 @@
             this.guna2DataGridView3.RowHeadersVisible = false;
             this.guna2DataGridView3.RowHeadersWidth = 82;
             this.guna2DataGridView3.RowTemplate.Height = 33;
-            this.guna2DataGridView3.Size = new System.Drawing.Size(2439, 921);
+            this.guna2DataGridView3.Size = new System.Drawing.Size(2606, 921);
             this.guna2DataGridView3.TabIndex = 43;
             this.guna2DataGridView3.ThemeStyle.AlternatingRowsStyle.BackColor = System.Drawing.Color.White;
             this.guna2DataGridView3.ThemeStyle.AlternatingRowsStyle.Font = null;

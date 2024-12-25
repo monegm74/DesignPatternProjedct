@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panel1 = new System.Windows.Forms.Panel();
+            this.label5 = new System.Windows.Forms.Label();
             this.Login_close = new System.Windows.Forms.Label();
             this.Login_RegisterHere = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -44,7 +45,6 @@
             this.guna2CirclePictureBox1 = new Guna.UI2.WinForms.Guna2CirclePictureBox();
             this.label3 = new System.Windows.Forms.Label();
             this.guna2PictureBox1 = new Guna.UI2.WinForms.Guna2PictureBox();
-            this.label5 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.guna2CirclePictureBox1)).BeginInit();
@@ -67,11 +67,24 @@
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.panel1.Location = new System.Drawing.Point(544, 257);
+            this.panel1.Location = new System.Drawing.Point(1438, 350);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1603, 1042);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.BackColor = System.Drawing.Color.White;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.ForeColor = System.Drawing.Color.Salmon;
+            this.label5.Location = new System.Drawing.Point(764, 601);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(250, 33);
+            this.label5.TabIndex = 22;
+            this.label5.Text = "Forget Password";
+            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // Login_close
             // 
@@ -109,7 +122,7 @@
             // 
             this.Login_txtPassword.BorderRadius = 30;
             this.Login_txtPassword.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Login_txtPassword.DefaultText = "aaaaaa";
+            this.Login_txtPassword.DefaultText = "1234aa";
             this.Login_txtPassword.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.Login_txtPassword.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Login_txtPassword.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -135,7 +148,7 @@
             // 
             this.Login_txtUsername.BorderRadius = 30;
             this.Login_txtUsername.Cursor = System.Windows.Forms.Cursors.IBeam;
-            this.Login_txtUsername.DefaultText = "fa_mo";
+            this.Login_txtUsername.DefaultText = "fergoooo";
             this.Login_txtUsername.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
             this.Login_txtUsername.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
             this.Login_txtUsername.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
@@ -275,19 +288,6 @@
             this.guna2PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.guna2PictureBox1.TabIndex = 2;
             this.guna2PictureBox1.TabStop = false;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.BackColor = System.Drawing.Color.White;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.ForeColor = System.Drawing.Color.Salmon;
-            this.label5.Location = new System.Drawing.Point(764, 601);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(250, 33);
-            this.label5.TabIndex = 22;
-            this.label5.Text = "Forget Password";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // Form1
             // 

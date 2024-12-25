@@ -40,14 +40,14 @@
             this.MovingPanal = new System.Windows.Forms.Panel();
             this.btnTrackIncome = new Guna.UI2.WinForms.Guna2Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.uC_MonitoringRoom1 = new HotelManagementSystem1.AllUserControls.UC_MonitoringRoom();
-            this.uC_TrackIncome1 = new HotelManagementSystem1.AllUserControls.UC_TrackIncome();
-            this.uC_ResidentInfo1 = new HotelManagementSystem1.AllUserControls.UC_ResidentInfo();
-            this.uC_mange_workers1 = new HotelManagementSystem1.AllUserControls.UC_mange_workers();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse3 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse4 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.uC_MonitoringRoom1 = new HotelManagementSystem1.AllUserControls.UC_MonitoringRoom();
+            this.uC_TrackIncome1 = new HotelManagementSystem1.AllUserControls.UC_TrackIncome();
+            this.uC_ResidentInfo1 = new HotelManagementSystem1.AllUserControls.UC_ResidentInfo();
+            this.uC_mange_workers1 = new HotelManagementSystem1.AllUserControls.UC_mange_workers();
             this.panel2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -103,7 +103,7 @@
             this.panel2.Location = new System.Drawing.Point(88, 13);
             this.panel2.Margin = new System.Windows.Forms.Padding(4);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(2673, 257);
+            this.panel2.Size = new System.Drawing.Size(3614, 257);
             this.panel2.TabIndex = 6;
             // 
             // btnAddRoom
@@ -126,7 +126,7 @@
             this.btnAddRoom.Location = new System.Drawing.Point(34, 37);
             this.btnAddRoom.Margin = new System.Windows.Forms.Padding(4);
             this.btnAddRoom.Name = "btnAddRoom";
-            this.btnAddRoom.Size = new System.Drawing.Size(436, 169);
+            this.btnAddRoom.Size = new System.Drawing.Size(500, 169);
             this.btnAddRoom.TabIndex = 9;
             this.btnAddRoom.Text = "Manage Worker";
             this.btnAddRoom.Click += new System.EventHandler(this.btnAddRoom_Click_1);
@@ -146,11 +146,12 @@
             this.guna2Button6.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.guna2Button6.Font = new System.Drawing.Font("Segoe UI", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.guna2Button6.ForeColor = System.Drawing.Color.White;
+            this.guna2Button6.Image = ((System.Drawing.Image)(resources.GetObject("guna2Button6.Image")));
             this.guna2Button6.ImageSize = new System.Drawing.Size(40, 40);
-            this.guna2Button6.Location = new System.Drawing.Point(2149, 37);
+            this.guna2Button6.Location = new System.Drawing.Point(3044, 37);
             this.guna2Button6.Margin = new System.Windows.Forms.Padding(4);
             this.guna2Button6.Name = "guna2Button6";
-            this.guna2Button6.Size = new System.Drawing.Size(364, 169);
+            this.guna2Button6.Size = new System.Drawing.Size(500, 169);
             this.guna2Button6.TabIndex = 8;
             this.guna2Button6.Text = "LogOut";
             this.guna2Button6.Click += new System.EventHandler(this.guna2Button6_Click);
@@ -172,10 +173,10 @@
             this.BTN_ROOMMonitor.ForeColor = System.Drawing.Color.White;
             this.BTN_ROOMMonitor.Image = ((System.Drawing.Image)(resources.GetObject("BTN_ROOMMonitor.Image")));
             this.BTN_ROOMMonitor.ImageSize = new System.Drawing.Size(40, 40);
-            this.BTN_ROOMMonitor.Location = new System.Drawing.Point(1637, 37);
+            this.BTN_ROOMMonitor.Location = new System.Drawing.Point(2405, 37);
             this.BTN_ROOMMonitor.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_ROOMMonitor.Name = "BTN_ROOMMonitor";
-            this.BTN_ROOMMonitor.Size = new System.Drawing.Size(436, 169);
+            this.BTN_ROOMMonitor.Size = new System.Drawing.Size(500, 169);
             this.BTN_ROOMMonitor.TabIndex = 7;
             this.BTN_ROOMMonitor.Text = "Monitoring Room ";
             this.BTN_ROOMMonitor.Click += new System.EventHandler(this.guna2Button1_Click);
@@ -197,10 +198,10 @@
             this.BtnResidentInfo.ForeColor = System.Drawing.Color.White;
             this.BtnResidentInfo.Image = ((System.Drawing.Image)(resources.GetObject("BtnResidentInfo.Image")));
             this.BtnResidentInfo.ImageSize = new System.Drawing.Size(40, 40);
-            this.BtnResidentInfo.Location = new System.Drawing.Point(534, 37);
+            this.BtnResidentInfo.Location = new System.Drawing.Point(773, 37);
             this.BtnResidentInfo.Margin = new System.Windows.Forms.Padding(4);
             this.BtnResidentInfo.Name = "BtnResidentInfo";
-            this.BtnResidentInfo.Size = new System.Drawing.Size(436, 169);
+            this.BtnResidentInfo.Size = new System.Drawing.Size(500, 169);
             this.BtnResidentInfo.TabIndex = 6;
             this.BtnResidentInfo.Text = "Resident Info";
             this.BtnResidentInfo.Click += new System.EventHandler(this.guna2Button5_Click);
@@ -232,10 +233,10 @@
             this.btnTrackIncome.ForeColor = System.Drawing.Color.White;
             this.btnTrackIncome.Image = ((System.Drawing.Image)(resources.GetObject("btnTrackIncome.Image")));
             this.btnTrackIncome.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnTrackIncome.Location = new System.Drawing.Point(1117, 37);
+            this.btnTrackIncome.Location = new System.Drawing.Point(1634, 37);
             this.btnTrackIncome.Margin = new System.Windows.Forms.Padding(4);
             this.btnTrackIncome.Name = "btnTrackIncome";
-            this.btnTrackIncome.Size = new System.Drawing.Size(436, 169);
+            this.btnTrackIncome.Size = new System.Drawing.Size(500, 169);
             this.btnTrackIncome.TabIndex = 3;
             this.btnTrackIncome.Text = "Track Income";
             this.btnTrackIncome.Click += new System.EventHandler(this.btnCusDetils_Click);
@@ -251,40 +252,8 @@
             this.panel1.Controls.Add(this.uC_mange_workers1);
             this.panel1.Location = new System.Drawing.Point(88, 295);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(2673, 1298);
+            this.panel1.Size = new System.Drawing.Size(3510, 1227);
             this.panel1.TabIndex = 7;
-            // 
-            // uC_MonitoringRoom1
-            // 
-            this.uC_MonitoringRoom1.BackColor = System.Drawing.Color.White;
-            this.uC_MonitoringRoom1.Location = new System.Drawing.Point(0, 3);
-            this.uC_MonitoringRoom1.Name = "uC_MonitoringRoom1";
-            this.uC_MonitoringRoom1.Size = new System.Drawing.Size(2670, 1595);
-            this.uC_MonitoringRoom1.TabIndex = 3;
-            // 
-            // uC_TrackIncome1
-            // 
-            this.uC_TrackIncome1.BackColor = System.Drawing.Color.White;
-            this.uC_TrackIncome1.Location = new System.Drawing.Point(0, 3);
-            this.uC_TrackIncome1.Name = "uC_TrackIncome1";
-            this.uC_TrackIncome1.Size = new System.Drawing.Size(2670, 1595);
-            this.uC_TrackIncome1.TabIndex = 2;
-            // 
-            // uC_ResidentInfo1
-            // 
-            this.uC_ResidentInfo1.BackColor = System.Drawing.Color.White;
-            this.uC_ResidentInfo1.Location = new System.Drawing.Point(3, 3);
-            this.uC_ResidentInfo1.Name = "uC_ResidentInfo1";
-            this.uC_ResidentInfo1.Size = new System.Drawing.Size(2670, 1595);
-            this.uC_ResidentInfo1.TabIndex = 1;
-            // 
-            // uC_mange_workers1
-            // 
-            this.uC_mange_workers1.BackColor = System.Drawing.Color.White;
-            this.uC_mange_workers1.Location = new System.Drawing.Point(3, 3);
-            this.uC_mange_workers1.Name = "uC_mange_workers1";
-            this.uC_mange_workers1.Size = new System.Drawing.Size(2670, 1595);
-            this.uC_mange_workers1.TabIndex = 0;
             // 
             // guna2Elipse1
             // 
@@ -306,12 +275,45 @@
             this.guna2Elipse4.BorderRadius = 30;
             this.guna2Elipse4.TargetControl = this;
             // 
+            // uC_MonitoringRoom1
+            // 
+            this.uC_MonitoringRoom1.BackColor = System.Drawing.Color.White;
+            this.uC_MonitoringRoom1.Location = new System.Drawing.Point(0, 3);
+            this.uC_MonitoringRoom1.Name = "uC_MonitoringRoom1";
+            this.uC_MonitoringRoom1.Size = new System.Drawing.Size(3611, 1595);
+            this.uC_MonitoringRoom1.TabIndex = 3;
+            // 
+            // uC_TrackIncome1
+            // 
+            this.uC_TrackIncome1.BackColor = System.Drawing.Color.White;
+            this.uC_TrackIncome1.Location = new System.Drawing.Point(3, 3);
+            this.uC_TrackIncome1.Name = "uC_TrackIncome1";
+            this.uC_TrackIncome1.Size = new System.Drawing.Size(3611, 1595);
+            this.uC_TrackIncome1.TabIndex = 2;
+            // 
+            // uC_ResidentInfo1
+            // 
+            this.uC_ResidentInfo1.BackColor = System.Drawing.Color.White;
+            this.uC_ResidentInfo1.Location = new System.Drawing.Point(3, 3);
+            this.uC_ResidentInfo1.Name = "uC_ResidentInfo1";
+            this.uC_ResidentInfo1.Size = new System.Drawing.Size(3611, 1595);
+            this.uC_ResidentInfo1.TabIndex = 1;
+            this.uC_ResidentInfo1.Load += new System.EventHandler(this.uC_ResidentInfo1_Load);
+            // 
+            // uC_mange_workers1
+            // 
+            this.uC_mange_workers1.BackColor = System.Drawing.Color.White;
+            this.uC_mange_workers1.Location = new System.Drawing.Point(3, 3);
+            this.uC_mange_workers1.Name = "uC_mange_workers1";
+            this.uC_mange_workers1.Size = new System.Drawing.Size(3611, 1595);
+            this.uC_mange_workers1.TabIndex = 0;
+            // 
             // ManagerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
-            this.ClientSize = new System.Drawing.Size(2912, 1591);
+            this.ClientSize = new System.Drawing.Size(3749, 1520);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.btnMinimize);

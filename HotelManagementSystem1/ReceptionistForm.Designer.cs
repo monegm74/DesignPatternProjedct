@@ -39,12 +39,12 @@
             this.btnExist2 = new Guna.UI2.WinForms.Guna2CircleButton();
             this.btnMinimize = new Guna.UI2.WinForms.Guna2CircleButton();
             this.panalResp = new System.Windows.Forms.Panel();
-            this.uC_ResCHECKOUT1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT();
-            this.uC_RoomAssign1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign();
-            this.uC_ManageResidents1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents();
             this.guna2Elipse1 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse2 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
             this.guna2Elipse3 = new Guna.UI2.WinForms.Guna2Elipse(this.components);
+            this.uC_ResCHECKOUT1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ResCHECKOUT();
+            this.uC_RoomAssign1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_RoomAssign();
+            this.uC_ManageResidents1 = new HotelManagementSystem1.AllUserControls_Resptions.UC_ManageResidents();
             this.panel2.SuspendLayout();
             this.panalResp.SuspendLayout();
             this.SuspendLayout();
@@ -81,10 +81,10 @@
             this.btnManageRes.ForeColor = System.Drawing.Color.White;
             this.btnManageRes.Image = ((System.Drawing.Image)(resources.GetObject("btnManageRes.Image")));
             this.btnManageRes.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnManageRes.Location = new System.Drawing.Point(34, 37);
+            this.btnManageRes.Location = new System.Drawing.Point(34, 27);
             this.btnManageRes.Margin = new System.Windows.Forms.Padding(4);
             this.btnManageRes.Name = "btnManageRes";
-            this.btnManageRes.Size = new System.Drawing.Size(436, 169);
+            this.btnManageRes.Size = new System.Drawing.Size(500, 169);
             this.btnManageRes.TabIndex = 9;
             this.btnManageRes.Text = "Manage Residents";
             this.btnManageRes.Click += new System.EventHandler(this.btnAddRoom_Click);
@@ -104,11 +104,12 @@
             this.btnLogOut.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(62)))), ((int)(((byte)(120)))), ((int)(((byte)(138)))));
             this.btnLogOut.Font = new System.Drawing.Font("Segoe UI", 13.875F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnLogOut.ForeColor = System.Drawing.Color.White;
+            this.btnLogOut.Image = ((System.Drawing.Image)(resources.GetObject("btnLogOut.Image")));
             this.btnLogOut.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnLogOut.Location = new System.Drawing.Point(2199, 37);
+            this.btnLogOut.Location = new System.Drawing.Point(2969, 27);
             this.btnLogOut.Margin = new System.Windows.Forms.Padding(4);
             this.btnLogOut.Name = "btnLogOut";
-            this.btnLogOut.Size = new System.Drawing.Size(364, 169);
+            this.btnLogOut.Size = new System.Drawing.Size(500, 169);
             this.btnLogOut.TabIndex = 8;
             this.btnLogOut.Text = "LogOut";
             this.btnLogOut.Click += new System.EventHandler(this.guna2Button6_Click);
@@ -130,10 +131,10 @@
             this.BTN_ROOMASS.ForeColor = System.Drawing.Color.White;
             this.BTN_ROOMASS.Image = ((System.Drawing.Image)(resources.GetObject("BTN_ROOMASS.Image")));
             this.BTN_ROOMASS.ImageSize = new System.Drawing.Size(40, 40);
-            this.BTN_ROOMASS.Location = new System.Drawing.Point(780, 37);
+            this.BTN_ROOMASS.Location = new System.Drawing.Point(1048, 27);
             this.BTN_ROOMASS.Margin = new System.Windows.Forms.Padding(4);
             this.BTN_ROOMASS.Name = "BTN_ROOMASS";
-            this.BTN_ROOMASS.Size = new System.Drawing.Size(436, 169);
+            this.BTN_ROOMASS.Size = new System.Drawing.Size(500, 169);
             this.BTN_ROOMASS.TabIndex = 7;
             this.BTN_ROOMASS.Text = "Assign Room ";
             this.BTN_ROOMASS.Click += new System.EventHandler(this.BTN_ROOMMonitor_Click);
@@ -165,10 +166,10 @@
             this.btnCheckout.ForeColor = System.Drawing.Color.White;
             this.btnCheckout.Image = ((System.Drawing.Image)(resources.GetObject("btnCheckout.Image")));
             this.btnCheckout.ImageSize = new System.Drawing.Size(40, 40);
-            this.btnCheckout.Location = new System.Drawing.Point(1479, 37);
+            this.btnCheckout.Location = new System.Drawing.Point(2117, 27);
             this.btnCheckout.Margin = new System.Windows.Forms.Padding(4);
             this.btnCheckout.Name = "btnCheckout";
-            this.btnCheckout.Size = new System.Drawing.Size(436, 169);
+            this.btnCheckout.Size = new System.Drawing.Size(500, 169);
             this.btnCheckout.TabIndex = 3;
             this.btnCheckout.Text = "Checkout";
             this.btnCheckout.Click += new System.EventHandler(this.btnTrackIncome_Click);
@@ -225,6 +226,21 @@
             this.panalResp.Size = new System.Drawing.Size(3536, 1298);
             this.panalResp.TabIndex = 10;
             // 
+            // guna2Elipse1
+            // 
+            this.guna2Elipse1.BorderRadius = 30;
+            this.guna2Elipse1.TargetControl = this;
+            // 
+            // guna2Elipse2
+            // 
+            this.guna2Elipse2.BorderRadius = 30;
+            this.guna2Elipse2.TargetControl = this;
+            // 
+            // guna2Elipse3
+            // 
+            this.guna2Elipse3.BorderRadius = 30;
+            this.guna2Elipse3.TargetControl = this;
+            // 
             // uC_ResCHECKOUT1
             // 
             this.uC_ResCHECKOUT1.BackColor = System.Drawing.Color.White;
@@ -248,21 +264,6 @@
             this.uC_ManageResidents1.Name = "uC_ManageResidents1";
             this.uC_ManageResidents1.Size = new System.Drawing.Size(2670, 1595);
             this.uC_ManageResidents1.TabIndex = 0;
-            // 
-            // guna2Elipse1
-            // 
-            this.guna2Elipse1.BorderRadius = 30;
-            this.guna2Elipse1.TargetControl = this;
-            // 
-            // guna2Elipse2
-            // 
-            this.guna2Elipse2.BorderRadius = 30;
-            this.guna2Elipse2.TargetControl = this;
-            // 
-            // guna2Elipse3
-            // 
-            this.guna2Elipse3.BorderRadius = 30;
-            this.guna2Elipse3.TargetControl = this;
             // 
             // ReceptionistForm
             // 
